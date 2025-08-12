@@ -227,9 +227,9 @@ export default function PurchaseOrdersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-            Purchase Orders
+            
           </h2>
-          <p className="text-muted-foreground mt-1">Manage your purchase orders and vendor transactions</p>
+          <p className="text-muted-foreground mt-1"> </p>
         </div>
         <Button
           asChild

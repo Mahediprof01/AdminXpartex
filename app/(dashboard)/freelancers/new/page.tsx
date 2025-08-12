@@ -48,12 +48,13 @@ export default function NewFreelancerPage() {
         </Button>
         <h1 className="text-2xl font-bold">Add New Freelancer</h1>
       </div>
-      <Card className="max-w-xl mx-auto border-0 shadow-lg">
-        <CardHeader>
-          <CardTitle>Freelancer Details</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form className="space-y-4" onSubmit={handleSubmit}>
+      <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
+        <Card className="border-0 shadow-none max-w-full">
+          <CardHeader>
+            <CardTitle>Freelancer Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <Label>Name</Label>
               <Input value={formData.name} onChange={e => handleChange("name", e.target.value)} required />
@@ -93,9 +94,10 @@ export default function NewFreelancerPage() {
               <Save className="mr-2 h-4 w-4" />
               {isLoading ? "Saving..." : "Submit"}
             </Button>
-          </form>
-        </CardContent>
-      </Card>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </motion.div>
   )
 }

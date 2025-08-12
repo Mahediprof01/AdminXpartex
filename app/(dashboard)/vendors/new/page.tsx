@@ -78,12 +78,13 @@ export default function NewVendorPage() {
         </div>
       </div>
 
-      <Card className="border-0 shadow-lg max-w-2xl">
-        <CardHeader>
-          <CardTitle>Vendor Information</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
+        <Card className="border-0 shadow-none max-w-full">
+          <CardHeader>
+            <CardTitle>Vendor Information</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Vendor Name *</Label>
@@ -166,9 +167,10 @@ export default function NewVendorPage() {
                 <Link href="/vendors">Cancel</Link>
               </Button>
             </div>
-          </form>
-        </CardContent>
-      </Card>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </motion.div>
   )
 }
