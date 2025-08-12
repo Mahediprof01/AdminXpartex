@@ -1,5 +1,48 @@
 "use client"
 
+// Filter options for DataTable
+const filterOptions = [
+  {
+    key: "status",
+    label: "Status",
+    options: [
+      { label: "Available", value: "available" },
+      { label: "Busy", value: "busy" },
+      { label: "Inactive", value: "inactive" },
+    ],
+  },
+  {
+    key: "skills",
+    label: "Skills",
+    options: [
+      { label: "React, Node.js, TypeScript", value: "React, Node.js, TypeScript" },
+      { label: "UI/UX Design, Figma", value: "UI/UX Design, Figma" },
+      { label: "Python, Django, AWS", value: "Python, Django, AWS" },
+      { label: "Content Writing, SEO", value: "Content Writing, SEO" },
+    ],
+  },
+  {
+    key: "name",
+    label: "Name",
+    options: [
+      { label: "Alex Thompson", value: "Alex Thompson" },
+      { label: "Maria Garcia", value: "Maria Garcia" },
+      { label: "David Chen", value: "David Chen" },
+      { label: "Sophie Miller", value: "Sophie Miller" },
+    ],
+  },
+  {
+    key: "rating",
+    label: "Rating",
+    options: [
+      { label: "4.9", value: "4.9" },
+      { label: "4.8", value: "4.8" },
+      { label: "4.7", value: "4.7" },
+      { label: "4.6", value: "4.6" },
+    ],
+  },
+];
+
 import type { Row, Table, Column } from "@tanstack/react-table"
 import type { Freelancer } from "@/lib/store"
 import { Button } from "@/components/ui/button"
@@ -205,35 +248,37 @@ export default function FreelancersPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6 p-6"
+      className="space-y-6 p-4 md:p-6"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
             Freelancers Management
           </h2>
-          <p className="text-muted-foreground mt-1">Manage your freelancer network and talent pool</p>
+          <p className="text-muted-foreground mt-1">Manage freelancers and their profiles</p>
         </div>
         <Button
           asChild
-          className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-lg"
+          className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg whitespace-nowrap"
         >
           <Link href="/freelancers/new">
             <Plus className="mr-2 h-4 w-4" />
-            Add Freelancer
+            Add New
           </Link>
         </Button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg border-0 p-6">
+      <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
         <div className="flex items-center gap-2 mb-4">
-          <UserCheck className="h-5 w-5 text-teal-500" />
-          <h3 className="text-lg font-semibold">All Freelancers</h3>
-          <Badge variant="secondary" className="ml-auto">
-            {freelancers.length} total
-          </Badge>
+          <UserCheck className="h-5 w-5 text-green-500" />
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            All Freelancers
+            <span className="ml-2 text-sm text-gray-500">(
+              <span className="font-semibold text-green-600">{freelancers.length}</span> freelancers
+            )</span>
+          </h3>
         </div>
-  <DataTable columns={columns} data={freelancers as Freelancer[]} searchKey="name" searchPlaceholder="Search freelancers..." />
+        <DataTable columns={columns} data={freelancers as Freelancer[]} searchKey="name" searchPlaceholder="Search freelancers..." filterOptions={filterOptions} />
       </div>
     </motion.div>
   )
