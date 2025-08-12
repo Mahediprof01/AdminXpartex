@@ -141,7 +141,7 @@ const columns: import("@tanstack/react-table").ColumnDef<Blog, any>[] = [
   },
   {
     accessorKey: "id",
-    header: "Blog ID",
+    header: "News ID",
   cell: ({ row }: { row: Row<Blog> }) => (
       <div className="font-mono text-sm bg-pink-100 px-2 py-1 rounded text-pink-700">{row.getValue("id")}</div>
     ),
@@ -244,9 +244,9 @@ export default function BlogsPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-            Blog Management
+            
           </h2>
-          <p className="text-muted-foreground mt-1">Manage blog posts and categories</p>
+          <p className="text-muted-foreground mt-1"> </p>
         </div>
         <Button
           asChild
@@ -263,7 +263,7 @@ export default function BlogsPage() {
         <div className="flex items-center gap-2 mb-4">
           <FileText className="h-5 w-5 text-blue-500" />
           <h3 className="text-lg font-semibold flex items-center gap-2">
-            All Blog Posts
+            All News Posts
             <span className="ml-2 text-sm text-gray-500">(
               <span className="font-semibold text-blue-600">{blogs.length}</span> blogs
             )</span>

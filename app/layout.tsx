@@ -7,8 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Multi-Vendor Admin Panel",
-  description: "Modern admin panel for multi-vendor marketplace",
+  title: "Xpartex Admin Panel",
+  description: "Admin panel for Xpartex marketplace",
     generator: 'Meta'
 }
 

@@ -242,10 +242,10 @@ export default function OrdersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
-            Orders Management
+            
           </h2>
           <p className="text-muted-foreground mt-1">
-            Track and manage customer orders and fulfillment
+             
           </p>
         </div>
         <Button

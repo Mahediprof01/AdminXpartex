@@ -253,9 +253,9 @@ export default function FreelancersPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-            Freelancers Management
+            
           </h2>
-          <p className="text-muted-foreground mt-1">Manage freelancers and their profiles</p>
+          <p className="text-muted-foreground mt-1"> </p>
         </div>
         <Button
           asChild

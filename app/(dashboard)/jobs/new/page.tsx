@@ -50,12 +50,13 @@ export default function NewJobPage() {
         </Button>
         <h1 className="text-2xl font-bold">Post New Job</h1>
       </div>
-      <Card className="max-w-xl mx-auto border-0 shadow-lg">
-        <CardHeader>
-          <CardTitle>Job Details</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form className="space-y-4" onSubmit={handleSubmit}>
+      <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
+        <Card className="border-0 shadow-none max-w-full">
+          <CardHeader>
+            <CardTitle>Job Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <Label>Job Title</Label>
               <Input value={formData.title} onChange={e => handleChange("title", e.target.value)} required />
@@ -102,9 +103,10 @@ export default function NewJobPage() {
               <Save className="mr-2 h-4 w-4" />
               {isLoading ? "Saving..." : "Submit"}
             </Button>
-          </form>
-        </CardContent>
-      </Card>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </motion.div>
   )
 }

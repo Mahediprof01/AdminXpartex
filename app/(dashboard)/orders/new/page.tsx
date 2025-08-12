@@ -52,29 +52,30 @@ export default function CreateOrderPage() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="max-w-3xl p-6 space-y-6 bg-white rounded-xl shadow-lg"
-    >
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="/orders">
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </Button>
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-            Create New Order
-          </h1>
-          <p className="text-muted-foreground">
-            Create a new order in your inventory
-          </p>
+    <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="space-y-6"
+      >
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="/orders">
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
+          </Button>
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+              Create New Order
+            </h1>
+            <p className="text-muted-foreground">
+              Create a new order in your inventory
+            </p>
+          </div>
         </div>
-      </div>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Order ID */}
           <div>
@@ -196,7 +197,8 @@ export default function CreateOrderPage() {
         >
           Create Order
         </Button>
-      </form>
-    </motion.div>
+        </form>
+      </motion.div>
+    </div>
   );
 }

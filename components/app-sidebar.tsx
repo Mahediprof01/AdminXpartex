@@ -70,7 +70,7 @@ const menuItems = [
     color: "text-indigo-500",
   },
   {
-    title: "News / Blogs",
+    title: "News",
     url: "/blogs",
     icon: FileText,
     color: "text-pink-500",
