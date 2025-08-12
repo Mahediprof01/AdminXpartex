@@ -61,6 +61,11 @@ export default function VendorsPage() {
       ),
     },
     {
+      id: "sl",
+      header: "SL",
+      cell: ({ row }) => row.index + 1,
+    },
+    {
       accessorKey: "id",
       header: "Vendor ID",
   cell: ({ row }: { row: Row<Vendor> }) => (

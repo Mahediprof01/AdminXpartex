@@ -87,7 +87,7 @@ const getShippingStatusColor = (status: string) => {
 const columns: import("@tanstack/react-table").ColumnDef<Order, any>[] = [
   {
     id: "select",
-  header: ({ table }: { table: Table<Order> }) => (
+    header: ({ table }: { table: Table<Order> }) => (
       <input
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
@@ -95,7 +95,7 @@ const columns: import("@tanstack/react-table").ColumnDef<Order, any>[] = [
         className="rounded border-gray-300"
       />
     ),
-  cell: ({ row }: { row: Row<Order> }) => (
+    cell: ({ row }: { row: Row<Order> }) => (
       <input
         type="checkbox"
         checked={row.getIsSelected()}
@@ -103,6 +103,11 @@ const columns: import("@tanstack/react-table").ColumnDef<Order, any>[] = [
         className="rounded border-gray-300"
       />
     ),
+  },
+  {
+    id: "sl",
+    header: "SL",
+    cell: ({ row }) => row.index + 1,
   },
   {
     accessorKey: "id",

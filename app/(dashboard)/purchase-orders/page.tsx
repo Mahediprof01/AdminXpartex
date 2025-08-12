@@ -97,6 +97,11 @@ const columns: import("@tanstack/react-table").ColumnDef<PurchaseOrder, any>[] =
     ),
   },
   {
+    id: "sl",
+    header: "SL",
+    cell: ({ row }) => row.index + 1,
+  },
+  {
     accessorKey: "id",
     header: "Purchase ID",
     cell: ({ row }) => (
