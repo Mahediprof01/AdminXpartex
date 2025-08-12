@@ -1,6 +1,38 @@
+"use client"
+
+// Filter options for DataTable
+const filterOptions = [
+  {
+    key: "status",
+    label: "Status",
+    options: [
+      { label: "Published", value: "published" },
+      { label: "Draft", value: "draft" },
+      { label: "Archived", value: "archived" },
+    ],
+  },
+  {
+    key: "category",
+    label: "Category",
+    options: [
+      { label: "Business", value: "Business" },
+      { label: "Technology", value: "Technology" },
+      { label: "Marketing", value: "Marketing" },
+    ],
+  },
+  {
+    key: "author",
+    label: "Author",
+    options: [
+      { label: "John Smith", value: "John Smith" },
+      { label: "Sarah Johnson", value: "Sarah Johnson" },
+      { label: "Mike Davis", value: "Mike Davis" },
+      { label: "Lisa Wilson", value: "Lisa Wilson" },
+    ],
+  },
+];
 import type { Row, Table, Column } from "@tanstack/react-table"
 import type { Blog } from "@/lib/store"
-"use client"
 
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/data-table"
@@ -207,35 +239,37 @@ export default function BlogsPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6 p-6"
+      className="space-y-6 p-4 md:p-6"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
-            News & Blogs
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+            Blog Management
           </h2>
-          <p className="text-muted-foreground mt-1">Create and manage your blog content and news articles</p>
+          <p className="text-muted-foreground mt-1">Manage blog posts and categories</p>
         </div>
         <Button
           asChild
-          className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white shadow-lg"
+          className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white shadow-lg whitespace-nowrap"
         >
           <Link href="/blogs/new">
             <Plus className="mr-2 h-4 w-4" />
-            Create New Post
+            Add New
           </Link>
         </Button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg border-0 p-6">
+      <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
         <div className="flex items-center gap-2 mb-4">
-          <FileText className="h-5 w-5 text-pink-500" />
-          <h3 className="text-lg font-semibold">All Blog Posts</h3>
-          <Badge variant="secondary" className="ml-auto">
-            {blogs.length} total
-          </Badge>
+          <FileText className="h-5 w-5 text-blue-500" />
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            All Blog Posts
+            <span className="ml-2 text-sm text-gray-500">(
+              <span className="font-semibold text-blue-600">{blogs.length}</span> blogs
+            )</span>
+          </h3>
         </div>
-  <DataTable columns={columns} data={blogs as Blog[]} searchKey="title" searchPlaceholder="Search posts..." />
+        <DataTable columns={columns} data={blogs as Blog[]} searchKey="title" searchPlaceholder="Search blogs..." filterOptions={filterOptions} />
       </div>
     </motion.div>
   )
