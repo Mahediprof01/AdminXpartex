@@ -18,7 +18,7 @@ export default function ProfilePage() {
 
   const [profileData, setProfileData] = useState({
     name: "Admin User",
-    email: "admin@vendorhub.com",
+    email: "admin@Xpartex.com",
     phone: "+1 (555) 123-4567",
     location: "San Francisco, CA",
     bio: "Experienced administrator managing multi-vendor marketplace operations with focus on efficiency and growth.",

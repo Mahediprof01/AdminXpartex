@@ -44,9 +44,9 @@ export default function LoginPage() {
             </div>
             <div className="text-center space-y-2">
               <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Welcome Back
+                Xpartex
               </CardTitle>
-              <CardDescription className="text-gray-600">Sign in to your VendorHub admin account</CardDescription>
+              <CardDescription className="text-gray-600">Sign in to your Xpartex admin account</CardDescription>
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -58,7 +58,7 @@ export default function LoginPage() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@vendorhub.com"
+                  placeholder="admin@xpartex.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="h-11 border-gray-200 focus:border-purple-300 focus:ring-purple-200"

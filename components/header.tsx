@@ -64,7 +64,7 @@ export function Header() {
                     </Avatar>
                     <div>
                       <p className="text-sm font-semibold leading-none">Admin User</p>
-                      <p className="text-xs leading-none text-muted-foreground mt-1">admin@vendorhub.com</p>
+                      <p className="text-xs leading-none text-muted-foreground mt-1">admin@Xpartex.com</p>
                     </div>
                   </div>
                 </div>
