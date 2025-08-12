@@ -1,7 +1,17 @@
-"use client"
-import { BarChart3, Package, ShoppingCart, Briefcase, FileText, UserCheck, Store, ShoppingBag, Truck } from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+"use client";
+import {
+  BarChart3,
+  Package,
+  ShoppingCart,
+  Briefcase,
+  FileText,
+  UserCheck,
+  Store,
+  ShoppingBag,
+  Truck,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   Sidebar,
@@ -14,7 +24,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 const menuItems = [
   {
@@ -71,10 +81,10 @@ const menuItems = [
     icon: UserCheck,
     color: "text-teal-500",
   },
-]
+];
 
-export function  AppSidebar() {
-  const pathname = usePathname()
+export function AppSidebar() {
+  const pathname = usePathname();
 
   return (
     <Sidebar className="border-r-0">
@@ -106,8 +116,16 @@ export function  AppSidebar() {
                     className="h-11 px-3 rounded-xl transition-all duration-200 hover:bg-sidebar-accent/50 data-[active=true]:bg-gradient-to-r data-[active=true]:from-purple-500/10 data-[active=true]:to-pink-500/10 data-[active=true]:border data-[active=true]:border-purple-200 data-[active=true]:shadow-sm"
                   >
                     <Link href={item.url} className="flex items-center gap-3">
-                      <item.icon className={`size-5 ${pathname === item.url ? "text-purple-600" : item.color}`} />
-                      <span className={`font-medium ${pathname === item.url ? "text-purple-900" : ""}`}>
+                      <item.icon
+                        className={`size-5 ${
+                          pathname === item.url ? "text-purple-600" : item.color
+                        }`}
+                      />
+                      <span
+                        className={`font-medium ${
+                          pathname === item.url ? "text-purple-900" : ""
+                        }`}
+                      >
                         {item.title}
                       </span>
                     </Link>
@@ -120,5 +138,5 @@ export function  AppSidebar() {
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
