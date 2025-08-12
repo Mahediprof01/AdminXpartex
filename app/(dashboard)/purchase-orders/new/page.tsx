@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 type PurchaseOrderForm = {
   id: string;
@@ -68,9 +70,21 @@ export default function CreatePurchaseOrderPage() {
       transition={{ duration: 0.3 }}
       className="max-w-3xl p-6 bg-white rounded-xl shadow-lg space-y-6"
     >
-      <h2 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-        Create Purchase Order
-      </h2>
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" size="icon" asChild>
+          <Link href="/purchase-orders">
+            <ArrowLeft className="h-4 w-4" />
+          </Link>
+        </Button>
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+            Create Purchase Order
+          </h1>
+          <p className="text-muted-foreground">
+            Create a new purchase order in your inventory
+          </p>
+        </div>
+      </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

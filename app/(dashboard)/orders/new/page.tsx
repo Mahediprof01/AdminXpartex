@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 const orderSchema = z.object({
   id: z.string().min(1, "Order ID is required"),
@@ -56,9 +58,21 @@ export default function CreateOrderPage() {
       transition={{ duration: 0.3 }}
       className="max-w-3xl p-6 space-y-6 bg-white rounded-xl shadow-lg"
     >
-      <h2 className="text-2xl font-bold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
-        Create New Order
-      </h2>
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" size="icon" asChild>
+          <Link href="/orders">
+            <ArrowLeft className="h-4 w-4" />
+          </Link>
+        </Button>
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+            Create New Order
+          </h1>
+          <p className="text-muted-foreground">
+            Create a new order in your inventory
+          </p>
+        </div>
+      </div>
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
