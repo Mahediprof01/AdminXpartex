@@ -267,9 +267,9 @@ export default function JobsPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            Jobs Management
+            
           </h2>
-          <p className="text-muted-foreground mt-1">Manage job postings and track applications</p>
+          <p className="text-muted-foreground mt-1"> </p>
         </div>
         <Button
           asChild

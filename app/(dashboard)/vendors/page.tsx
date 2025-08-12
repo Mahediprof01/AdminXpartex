@@ -194,9 +194,9 @@ export default function VendorsPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Vendors Management
+            
           </h2>
-          <p className="text-muted-foreground mt-1">Manage your vendor relationships and partnerships</p>
+          <p className="text-muted-foreground mt-1"></p>
         </div>
         <Button
           asChild
