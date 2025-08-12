@@ -1,5 +1,7 @@
 "use client"
 
+import type { Row, Table, Column } from "@tanstack/react-table"
+import type { Product } from "@/lib/store"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
@@ -46,10 +48,10 @@ export default function ProductsPage() {
     },
   ]
 
-  const columns = [
+  const columns: import("@tanstack/react-table").ColumnDef<Product, any>[] = [
     {
       id: "select",
-      header: ({ table }) => (
+  header: ({ table }: { table: Table<Product> }) => (
         <input
           type="checkbox"
           checked={table.getIsAllPageRowsSelected()}
@@ -57,7 +59,7 @@ export default function ProductsPage() {
           className="rounded border-gray-300"
         />
       ),
-      cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Product> }) => (
         <input
           type="checkbox"
           checked={row.getIsSelected()}
@@ -77,14 +79,14 @@ export default function ProductsPage() {
     },
     {
       accessorKey: "name",
-      header: ({ column }) => {
+  header: ({ column }: { column: Column<Product, unknown> }) => {
         return (
           <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
             Product Name
           </Button>
         )
       },
-      cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Product> }) => (
         <Link
           href={`/products/${row.original.id}`}
           className="font-medium text-blue-600 hover:text-blue-800 hover:underline cursor-pointer block max-w-[150px] sm:max-w-[200px] md:max-w-[300px] truncate"
@@ -105,7 +107,7 @@ export default function ProductsPage() {
     {
       accessorKey: "price",
       header: "Price",
-      cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Product> }) => {
         const price = Number.parseFloat(row.getValue("price"))
         const formatted = new Intl.NumberFormat("en-US", {
           style: "currency",
@@ -117,7 +119,7 @@ export default function ProductsPage() {
     {
       accessorKey: "stock",
       header: "Stock",
-      cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Product> }) => {
         const stock = row.getValue("stock") as number
         return (
           <div
@@ -133,21 +135,21 @@ export default function ProductsPage() {
     {
       accessorKey: "status",
       header: "Status",
-      cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Product> }) => {
         const status = row.getValue("status")
         return (
           <Badge
             variant={status === "active" ? "default" : "secondary"}
             className={status === "active" ? "bg-green-100 text-green-700 hover:bg-green-200" : ""}
           >
-            {status}
+            {String(status)}
           </Badge>
         )
       },
     },
     {
       id: "actions",
-      cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Product> }) => {
         const product = row.original
 
         return (

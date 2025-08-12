@@ -1,3 +1,5 @@
+import type { Row, Table, Column } from "@tanstack/react-table"
+import type { Blog } from "@/lib/store"
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -80,10 +82,10 @@ const getCategoryColor = (category: string) => {
   }
 }
 
-const columns = [
+const columns: import("@tanstack/react-table").ColumnDef<Blog, any>[] = [
   {
     id: "select",
-    header: ({ table }) => (
+  header: ({ table }: { table: Table<Blog> }) => (
       <input
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
@@ -91,7 +93,7 @@ const columns = [
         className="rounded border-gray-300"
       />
     ),
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Blog> }) => (
       <input
         type="checkbox"
         checked={row.getIsSelected()}
@@ -103,24 +105,24 @@ const columns = [
   {
     accessorKey: "id",
     header: "Blog ID",
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Blog> }) => (
       <div className="font-mono text-sm bg-pink-100 px-2 py-1 rounded text-pink-700">{row.getValue("id")}</div>
     ),
   },
   {
     accessorKey: "title",
     header: "Title",
-    cell: ({ row }) => <div className="font-medium max-w-xs truncate">{row.getValue("title")}</div>,
+  cell: ({ row }: { row: Row<Blog> }) => <div className="font-medium max-w-xs truncate">{row.getValue("title")}</div>,
   },
   {
     accessorKey: "author",
     header: "Author",
-    cell: ({ row }) => <div className="text-sm">{row.getValue("author")}</div>,
+  cell: ({ row }: { row: Row<Blog> }) => <div className="text-sm">{row.getValue("author")}</div>,
   },
   {
     accessorKey: "category",
     header: "Category",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Blog> }) => {
       const category = row.getValue("category") as string
       return (
         <Badge variant="outline" className={getCategoryColor(category)}>
@@ -132,12 +134,12 @@ const columns = [
   {
     accessorKey: "views",
     header: "Views",
-    cell: ({ row }) => <div className="font-medium">{row.getValue("views").toLocaleString()}</div>,
+  cell: ({ row }: { row: Row<Blog> }) => <div className="font-medium">{(row.getValue("views") as number).toLocaleString()}</div>,
   },
   {
     accessorKey: "publishedDate",
     header: "Published",
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Blog> }) => (
       <div className="text-sm text-muted-foreground">
         {new Date(row.getValue("publishedDate")).toLocaleDateString()}
       </div>
@@ -146,7 +148,7 @@ const columns = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Blog> }) => {
       const status = row.getValue("status") as string
       return (
         <Badge variant="outline" className={getStatusColor(status)}>
@@ -157,7 +159,7 @@ const columns = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Blog> }) => {
       const blog = row.original
 
       return (
@@ -228,7 +230,7 @@ export default function BlogsPage() {
             {blogs.length} total
           </Badge>
         </div>
-        <DataTable columns={columns} data={blogs} searchKey="title" searchPlaceholder="Search posts..." />
+  <DataTable columns={columns} data={blogs as Blog[]} searchKey="title" searchPlaceholder="Search posts..." />
       </div>
     </motion.div>
   )

@@ -15,6 +15,9 @@ import {
 import Link from "next/link"
 import { motion } from "framer-motion"
 
+import type { Row, Table, Column } from "@tanstack/react-table"
+import type { PurchaseOrder } from "@/lib/store"
+
 const purchaseOrders = [
   {
     id: "PO001",
@@ -73,7 +76,7 @@ const getStatusColor = (status: string) => {
   }
 }
 
-const columns = [
+const columns: import("@tanstack/react-table").ColumnDef<PurchaseOrder, any>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -103,17 +106,17 @@ const columns = [
   {
     accessorKey: "vendor",
     header: "Vendor",
-    cell: ({ row }) => <div className="font-medium">{row.getValue("vendor")}</div>,
+    cell: ({ row }: { row: Row<PurchaseOrder> }) => <div className="font-medium">{row.getValue("vendor")}</div>,
   },
   {
     accessorKey: "product",
     header: "Product",
-    cell: ({ row }) => <div className="text-sm">{row.getValue("product")}</div>,
+    cell: ({ row }: { row: Row<PurchaseOrder> }) => <div className="text-sm">{row.getValue("product")}</div>,
   },
   {
     accessorKey: "quantity",
     header: "QTY",
-    cell: ({ row }) => <div className="font-medium">{row.getValue("quantity")} units</div>,
+    cell: ({ row }: { row: Row<PurchaseOrder> }) => <div className="font-medium">{row.getValue("quantity")} units</div>,
   },
   {
     accessorKey: "price",
@@ -231,7 +234,7 @@ export default function PurchaseOrdersPage() {
             {purchaseOrders.length} total
           </Badge>
         </div>
-        <DataTable columns={columns} data={purchaseOrders} searchKey="vendor" searchPlaceholder="Search by vendor..." />
+  <DataTable columns={columns} data={purchaseOrders as PurchaseOrder[]} searchKey="vendor" searchPlaceholder="Search by vendor..." />
       </div>
     </motion.div>
   )

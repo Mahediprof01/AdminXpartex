@@ -1,5 +1,7 @@
 "use client"
 
+import type { Row, Table, Column } from "@tanstack/react-table"
+import type { Job } from "@/lib/store"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
@@ -88,10 +90,10 @@ const getTypeColor = (type: string) => {
   }
 }
 
-const columns = [
+const columns: import("@tanstack/react-table").ColumnDef<Job, any>[] = [
   {
     id: "select",
-    header: ({ table }) => (
+  header: ({ table }: { table: Table<Job> }) => (
       <input
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
@@ -99,7 +101,7 @@ const columns = [
         className="rounded border-gray-300"
       />
     ),
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Job> }) => (
       <input
         type="checkbox"
         checked={row.getIsSelected()}
@@ -118,22 +120,22 @@ const columns = [
   {
     accessorKey: "title",
     header: "Job Title",
-    cell: ({ row }) => <div className="font-medium">{row.getValue("title")}</div>,
+  cell: ({ row }: { row: Row<Job> }) => <div className="font-medium">{row.getValue("title")}</div>,
   },
   {
     accessorKey: "company",
     header: "Company",
-    cell: ({ row }) => <div className="text-sm">{row.getValue("company")}</div>,
+  cell: ({ row }: { row: Row<Job> }) => <div className="text-sm">{row.getValue("company")}</div>,
   },
   {
     accessorKey: "location",
     header: "Location",
-    cell: ({ row }) => <div className="text-sm text-muted-foreground">{row.getValue("location")}</div>,
+  cell: ({ row }: { row: Row<Job> }) => <div className="text-sm text-muted-foreground">{row.getValue("location")}</div>,
   },
   {
     accessorKey: "type",
     header: "Type",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Job> }) => {
       const type = row.getValue("type") as string
       return (
         <Badge variant="outline" className={getTypeColor(type)}>
@@ -145,12 +147,12 @@ const columns = [
   {
     accessorKey: "salary",
     header: "Salary",
-    cell: ({ row }) => <div className="font-semibold text-green-600">{row.getValue("salary")}</div>,
+  cell: ({ row }: { row: Row<Job> }) => <div className="font-semibold text-green-600">{row.getValue("salary")}</div>,
   },
   {
     accessorKey: "applicants",
     header: "Applicants",
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Job> }) => (
       <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
         {row.getValue("applicants")} applied
       </Badge>
@@ -159,7 +161,7 @@ const columns = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Job> }) => {
       const status = row.getValue("status") as string
       return (
         <Badge variant="outline" className={getStatusColor(status)}>
@@ -170,7 +172,7 @@ const columns = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Job> }) => {
       const job = row.original
 
       return (
@@ -241,7 +243,7 @@ export default function JobsPage() {
             {jobs.length} total
           </Badge>
         </div>
-        <DataTable columns={columns} data={jobs} searchKey="title" searchPlaceholder="Search jobs..." />
+  <DataTable columns={columns} data={jobs as Job[]} searchKey="title" searchPlaceholder="Search jobs..." />
       </div>
     </motion.div>
   )

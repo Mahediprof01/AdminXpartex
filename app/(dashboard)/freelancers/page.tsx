@@ -1,5 +1,7 @@
 "use client"
 
+import type { Row, Table, Column } from "@tanstack/react-table"
+import type { Freelancer } from "@/lib/store"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
@@ -75,10 +77,10 @@ const getStatusColor = (status: string) => {
   }
 }
 
-const columns = [
+const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
   {
     id: "select",
-    header: ({ table }) => (
+  header: ({ table }: { table: Table<Freelancer> }) => (
       <input
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
@@ -86,7 +88,7 @@ const columns = [
         className="rounded border-gray-300"
       />
     ),
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Freelancer> }) => (
       <input
         type="checkbox"
         checked={row.getIsSelected()}
@@ -98,29 +100,29 @@ const columns = [
   {
     accessorKey: "id",
     header: "Freelancer ID",
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Freelancer> }) => (
       <div className="font-mono text-sm bg-teal-100 px-2 py-1 rounded text-teal-700">{row.getValue("id")}</div>
     ),
   },
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
+  cell: ({ row }: { row: Row<Freelancer> }) => <div className="font-medium">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "email",
     header: "Email",
-    cell: ({ row }) => <div className="text-sm text-muted-foreground">{row.getValue("email")}</div>,
+  cell: ({ row }: { row: Row<Freelancer> }) => <div className="text-sm text-muted-foreground">{row.getValue("email")}</div>,
   },
   {
     accessorKey: "skills",
     header: "Skills",
-    cell: ({ row }) => <div className="text-sm max-w-xs truncate">{row.getValue("skills")}</div>,
+  cell: ({ row }: { row: Row<Freelancer> }) => <div className="text-sm max-w-xs truncate">{row.getValue("skills")}</div>,
   },
   {
     accessorKey: "rating",
     header: "Rating",
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Freelancer> }) => (
       <div className="flex items-center gap-1">
         <span className="text-yellow-500">★</span>
         <span className="font-medium">{row.getValue("rating")}</span>
@@ -130,7 +132,7 @@ const columns = [
   {
     accessorKey: "projects",
     header: "Projects",
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Freelancer> }) => (
       <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
         {row.getValue("projects")} completed
       </Badge>
@@ -139,12 +141,12 @@ const columns = [
   {
     accessorKey: "hourlyRate",
     header: "Rate",
-    cell: ({ row }) => <div className="font-semibold text-green-600">${row.getValue("hourlyRate")}/hr</div>,
+  cell: ({ row }: { row: Row<Freelancer> }) => <div className="font-semibold text-green-600">${row.getValue("hourlyRate")}/hr</div>,
   },
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Freelancer> }) => {
       const status = row.getValue("status") as string
       return (
         <Badge variant="outline" className={getStatusColor(status)}>
@@ -155,7 +157,7 @@ const columns = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Freelancer> }) => {
       const freelancer = row.original
 
       return (
@@ -226,7 +228,7 @@ export default function FreelancersPage() {
             {freelancers.length} total
           </Badge>
         </div>
-        <DataTable columns={columns} data={freelancers} searchKey="name" searchPlaceholder="Search freelancers..." />
+  <DataTable columns={columns} data={freelancers as Freelancer[]} searchKey="name" searchPlaceholder="Search freelancers..." />
       </div>
     </motion.div>
   )

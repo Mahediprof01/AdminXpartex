@@ -16,6 +16,10 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { useVendorStore } from "@/lib/store"
 
+
+import type { Row, Table, Column } from "@tanstack/react-table"
+import type { Vendor } from "@/lib/store"
+
 export default function VendorsPage() {
   const { vendors, deleteVendor } = useVendorStore()
 
@@ -36,10 +40,10 @@ export default function VendorsPage() {
     },
   ]
 
-  const columns = [
+  const columns: import("@tanstack/react-table").ColumnDef<Vendor, any>[] = [
     {
       id: "select",
-      header: ({ table }) => (
+      header: ({ table }: { table: Table<Vendor> }) => (
         <input
           type="checkbox"
           checked={table.getIsAllPageRowsSelected()}
@@ -47,7 +51,7 @@ export default function VendorsPage() {
           className="rounded border-gray-300"
         />
       ),
-      cell: ({ row }) => (
+      cell: ({ row }: { row: Row<Vendor> }) => (
         <input
           type="checkbox"
           checked={row.getIsSelected()}
@@ -59,7 +63,7 @@ export default function VendorsPage() {
     {
       accessorKey: "id",
       header: "Vendor ID",
-      cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Vendor> }) => (
         <div className="font-mono text-sm bg-purple-100 px-2 py-1 rounded text-purple-700 max-w-[100px] truncate">
           {row.getValue("id")}
         </div>
@@ -67,14 +71,14 @@ export default function VendorsPage() {
     },
     {
       accessorKey: "name",
-      header: ({ column }) => {
+  header: ({ column }: { column: Column<Vendor, unknown> }) => {
         return (
           <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
             Vendor Name
           </Button>
         )
       },
-      cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Vendor> }) => (
         <Link
           href={`/vendors/${row.original.id}`}
           className="font-medium text-purple-600 hover:text-purple-800 hover:underline cursor-pointer block max-w-[150px] sm:max-w-[200px] md:max-w-[300px] truncate"
@@ -95,12 +99,12 @@ export default function VendorsPage() {
     {
       accessorKey: "phone",
       header: "Phone",
-      cell: ({ row }) => <div className="text-sm whitespace-nowrap">{row.getValue("phone")}</div>,
+  cell: ({ row }: { row: Row<Vendor> }) => <div className="text-sm whitespace-nowrap">{row.getValue("phone")}</div>,
     },
     {
       accessorKey: "products",
       header: "Products",
-      cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Vendor> }) => (
         <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 whitespace-nowrap">
           {row.getValue("products")} items
         </Badge>
@@ -109,7 +113,7 @@ export default function VendorsPage() {
     {
       accessorKey: "revenue",
       header: "Revenue",
-      cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Vendor> }) => {
         const revenue = row.getValue("revenue") as number
         const formatted = new Intl.NumberFormat("en-US", {
           style: "currency",
@@ -121,21 +125,21 @@ export default function VendorsPage() {
     {
       accessorKey: "status",
       header: "Status",
-      cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Vendor> }) => {
         const status = row.getValue("status")
         return (
           <Badge
             variant={status === "active" ? "default" : "secondary"}
             className={status === "active" ? "bg-green-100 text-green-700 hover:bg-green-200" : ""}
           >
-            {status}
+            {String(status)}
           </Badge>
         )
       },
     },
     {
       id: "actions",
-      cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Vendor> }) => {
         const vendor = row.original
 
         return (

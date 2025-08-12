@@ -1,5 +1,7 @@
 "use client"
 
+import type { Row, Table, Column } from "@tanstack/react-table"
+import type { Order } from "@/lib/store"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
@@ -82,10 +84,10 @@ const getShippingStatusColor = (status: string) => {
   }
 }
 
-const columns = [
+const columns: import("@tanstack/react-table").ColumnDef<Order, any>[] = [
   {
     id: "select",
-    header: ({ table }) => (
+  header: ({ table }: { table: Table<Order> }) => (
       <input
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
@@ -93,7 +95,7 @@ const columns = [
         className="rounded border-gray-300"
       />
     ),
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Order> }) => (
       <input
         type="checkbox"
         checked={row.getIsSelected()}
@@ -105,19 +107,19 @@ const columns = [
   {
     accessorKey: "id",
     header: "Order ID",
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Order> }) => (
       <div className="font-mono text-sm bg-red-100 px-2 py-1 rounded text-red-700">{row.getValue("id")}</div>
     ),
   },
   {
     accessorKey: "customer",
     header: "Customer",
-    cell: ({ row }) => <div className="font-medium">{row.getValue("customer")}</div>,
+  cell: ({ row }: { row: Row<Order> }) => <div className="font-medium">{row.getValue("customer")}</div>,
   },
   {
     accessorKey: "items",
     header: "Items",
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Order> }) => (
       <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
         {row.getValue("items")} items
       </Badge>
@@ -126,7 +128,7 @@ const columns = [
   {
     accessorKey: "total",
     header: "Total",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Order> }) => {
       const total = Number.parseFloat(row.getValue("total"))
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
@@ -138,14 +140,14 @@ const columns = [
   {
     accessorKey: "orderDate",
     header: "Order Date",
-    cell: ({ row }) => (
+  cell: ({ row }: { row: Row<Order> }) => (
       <div className="text-sm text-muted-foreground">{new Date(row.getValue("orderDate")).toLocaleDateString()}</div>
     ),
   },
   {
     accessorKey: "paymentStatus",
     header: "Payment",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Order> }) => {
       const status = row.getValue("paymentStatus") as string
       return (
         <Badge variant="outline" className={getPaymentStatusColor(status)}>
@@ -157,7 +159,7 @@ const columns = [
   {
     accessorKey: "shippingStatus",
     header: "Shipping",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Order> }) => {
       const status = row.getValue("shippingStatus") as string
       return (
         <Badge variant="outline" className={getShippingStatusColor(status)}>
@@ -168,7 +170,7 @@ const columns = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+  cell: ({ row }: { row: Row<Order> }) => {
       const order = row.original
 
       return (
@@ -239,7 +241,7 @@ export default function OrdersPage() {
             {orders.length} total
           </Badge>
         </div>
-        <DataTable columns={columns} data={orders} searchKey="customer" searchPlaceholder="Search by customer..." />
+  <DataTable columns={columns} data={orders as Order[]} searchKey="customer" searchPlaceholder="Search by customer..." />
       </div>
     </motion.div>
   )
