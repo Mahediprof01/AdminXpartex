@@ -68,7 +68,7 @@ export default function CreatePurchaseOrderPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="max-w-3xl p-6 bg-white rounded-xl shadow-lg space-y-6"
+      className="mx-auto w-11/12 p-6 bg-white rounded-xl shadow-lg space-y-6"
     >
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" asChild>

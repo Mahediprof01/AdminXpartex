@@ -1,24 +1,30 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, Save } from "lucide-react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { useProductStore } from "@/lib/store"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Save } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useProductStore } from "@/lib/store";
+import { useRouter } from "next/navigation";
 
 export default function NewProductPage() {
-  const { addProduct } = useProductStore()
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const { addProduct } = useProductStore();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -29,11 +35,11 @@ export default function NewProductPage() {
     description: "",
     vendor: "",
     sku: "",
-  })
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
       addProduct({
@@ -46,26 +52,26 @@ export default function NewProductPage() {
         vendor: formData.vendor,
         sku: formData.sku,
         createdAt: new Date().toISOString().split("T")[0],
-      })
+      });
 
-      router.push("/products")
+      router.push("/products");
     } catch (error) {
-      console.error("Error adding product:", error)
+      console.error("Error adding product:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6 p-4 md:p-6"
+      className="space-y-6 p-4 md:p-6 "
     >
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
@@ -74,8 +80,12 @@ export default function NewProductPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Add New Product</h1>
-          <p className="text-muted-foreground">Create a new product in your inventory</p>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+            Add New Product
+          </h1>
+          <p className="text-muted-foreground">
+            Create a new product in your inventory
+          </p>
         </div>
       </div>
 
@@ -98,7 +108,10 @@ export default function NewProductPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Category *</Label>
-                <Select value={formData.category} onValueChange={(value) => handleChange("category", value)}>
+                <Select
+                  value={formData.category}
+                  onValueChange={(value) => handleChange("category", value)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
@@ -138,7 +151,10 @@ export default function NewProductPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="status">Status</Label>
-                <Select value={formData.status} onValueChange={(value) => handleChange("status", value)}>
+                <Select
+                  value={formData.status}
+                  onValueChange={(value) => handleChange("status", value)}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -199,5 +215,5 @@ export default function NewProductPage() {
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }

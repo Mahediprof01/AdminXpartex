@@ -1,24 +1,30 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, Save } from "lucide-react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { useVendorStore } from "@/lib/store"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Save } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useVendorStore } from "@/lib/store";
+import { useRouter } from "next/navigation";
 
 export default function NewVendorPage() {
-  const { addVendor } = useVendorStore()
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const { addVendor } = useVendorStore();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -29,11 +35,11 @@ export default function NewVendorPage() {
     revenue: "0",
     address: "",
     description: "",
-  })
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
       addVendor({
@@ -45,19 +51,19 @@ export default function NewVendorPage() {
         revenue: Number.parseFloat(formData.revenue),
         address: formData.address,
         description: formData.description,
-      })
+      });
 
-      router.push("/vendors")
+      router.push("/vendors");
     } catch (error) {
-      console.error("Error adding vendor:", error)
+      console.error("Error adding vendor:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   return (
     <motion.div
@@ -73,8 +79,12 @@ export default function NewVendorPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Add New Vendor</h1>
-          <p className="text-muted-foreground">Create a new vendor partnership</p>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+            Add New Vendor
+          </h1>
+          <p className="text-muted-foreground">
+            Create a new vendor partnership
+          </p>
         </div>
       </div>
 
@@ -120,7 +130,10 @@ export default function NewVendorPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="status">Status</Label>
-                <Select value={formData.status} onValueChange={(value) => handleChange("status", value)}>
+                <Select
+                  value={formData.status}
+                  onValueChange={(value) => handleChange("status", value)}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -170,5 +183,5 @@ export default function NewVendorPage() {
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }
