@@ -73,7 +73,7 @@ const menuItems = [
   },
 ]
 
-export function AppSidebar() {
+export function  AppSidebar() {
   const pathname = usePathname()
 
   return (
