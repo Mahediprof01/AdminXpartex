@@ -1,0 +1,233 @@
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { DataTable } from "@/components/data-table"
+import { Badge } from "@/components/ui/badge"
+import { MoreHorizontal, Plus, Eye, Edit, Trash, UserCheck } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import Link from "next/link"
+import { motion } from "framer-motion"
+
+const freelancers = [
+  {
+    id: "FRLNC001",
+    name: "Alex Thompson",
+    email: "alex@example.com",
+    skills: "React, Node.js, TypeScript",
+    rating: 4.9,
+    projects: 23,
+    status: "available",
+    hourlyRate: 85,
+    joinedDate: "2024-01-15",
+  },
+  {
+    id: "FRLNC002",
+    name: "Maria Garcia",
+    email: "maria@example.com",
+    skills: "UI/UX Design, Figma",
+    rating: 4.8,
+    projects: 18,
+    status: "busy",
+    hourlyRate: 75,
+    joinedDate: "2024-01-14",
+  },
+  {
+    id: "FRLNC003",
+    name: "David Chen",
+    email: "david@example.com",
+    skills: "Python, Django, AWS",
+    rating: 4.7,
+    projects: 31,
+    status: "available",
+    hourlyRate: 90,
+    joinedDate: "2024-01-13",
+  },
+  {
+    id: "FRLNC004",
+    name: "Sophie Miller",
+    email: "sophie@example.com",
+    skills: "Content Writing, SEO",
+    rating: 4.6,
+    projects: 12,
+    status: "inactive",
+    hourlyRate: 45,
+    joinedDate: "2024-01-12",
+  },
+]
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "available":
+      return "bg-green-100 text-green-700 border-green-200"
+    case "busy":
+      return "bg-yellow-100 text-yellow-700 border-yellow-200"
+    case "inactive":
+      return "bg-gray-100 text-gray-700 border-gray-200"
+    default:
+      return "bg-gray-100 text-gray-700 border-gray-200"
+  }
+}
+
+const columns = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <input
+        type="checkbox"
+        checked={table.getIsAllPageRowsSelected()}
+        onChange={(e) => table.toggleAllPageRowsSelected(!!e.target.checked)}
+        className="rounded border-gray-300"
+      />
+    ),
+    cell: ({ row }) => (
+      <input
+        type="checkbox"
+        checked={row.getIsSelected()}
+        onChange={(e) => row.toggleSelected(!!e.target.checked)}
+        className="rounded border-gray-300"
+      />
+    ),
+  },
+  {
+    accessorKey: "id",
+    header: "Freelancer ID",
+    cell: ({ row }) => (
+      <div className="font-mono text-sm bg-teal-100 px-2 py-1 rounded text-teal-700">{row.getValue("id")}</div>
+    ),
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+    cell: ({ row }) => <div className="text-sm text-muted-foreground">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "skills",
+    header: "Skills",
+    cell: ({ row }) => <div className="text-sm max-w-xs truncate">{row.getValue("skills")}</div>,
+  },
+  {
+    accessorKey: "rating",
+    header: "Rating",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-1">
+        <span className="text-yellow-500">★</span>
+        <span className="font-medium">{row.getValue("rating")}</span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "projects",
+    header: "Projects",
+    cell: ({ row }) => (
+      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+        {row.getValue("projects")} completed
+      </Badge>
+    ),
+  },
+  {
+    accessorKey: "hourlyRate",
+    header: "Rate",
+    cell: ({ row }) => <div className="font-semibold text-green-600">${row.getValue("hourlyRate")}/hr</div>,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const status = row.getValue("status") as string
+      return (
+        <Badge variant="outline" className={getStatusColor(status)}>
+          {status}
+        </Badge>
+      )
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const freelancer = row.original
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-teal-100">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem asChild>
+              <Link href={`/freelancers/${freelancer.id}`} className="cursor-pointer">
+                <Eye className="mr-2 h-4 w-4 text-blue-500" />
+                View Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/freelancers/${freelancer.id}/edit`} className="cursor-pointer">
+                <Edit className="mr-2 h-4 w-4 text-green-500" />
+                Edit Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-red-600 cursor-pointer focus:text-red-600">
+              <Trash className="mr-2 h-4 w-4" />
+              Remove Freelancer
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
+  },
+]
+
+export default function FreelancersPage() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="space-y-6 p-6"
+    >
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+            Freelancers Management
+          </h2>
+          <p className="text-muted-foreground mt-1">Manage your freelancer network and talent pool</p>
+        </div>
+        <Button
+          asChild
+          className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-lg"
+        >
+          <Link href="/freelancers/new">
+            <Plus className="mr-2 h-4 w-4" />
+            Add Freelancer
+          </Link>
+        </Button>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-lg border-0 p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <UserCheck className="h-5 w-5 text-teal-500" />
+          <h3 className="text-lg font-semibold">All Freelancers</h3>
+          <Badge variant="secondary" className="ml-auto">
+            {freelancers.length} total
+          </Badge>
+        </div>
+        <DataTable columns={columns} data={freelancers} searchKey="name" searchPlaceholder="Search freelancers..." />
+      </div>
+    </motion.div>
+  )
+}
