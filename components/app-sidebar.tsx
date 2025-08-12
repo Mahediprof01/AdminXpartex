@@ -1,5 +1,5 @@
 "use client"
-import { BarChart3, Package, ShoppingCart, Briefcase, FileText, UserCheck, Store, ShoppingBag } from "lucide-react"
+import { BarChart3, Package, ShoppingCart, Briefcase, FileText, UserCheck, Store, ShoppingBag, Truck } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -46,6 +46,12 @@ const menuItems = [
     url: "/orders",
     icon: ShoppingCart,
     color: "text-red-500",
+  },
+  {
+    title: "Logistics",
+    url: "/logistics",
+    icon: Truck,
+    color: "text-cyan-500",
   },
   {
     title: "Jobs",
