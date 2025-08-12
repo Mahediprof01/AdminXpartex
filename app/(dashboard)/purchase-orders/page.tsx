@@ -150,9 +150,20 @@ const columns: import("@tanstack/react-table").ColumnDef<PurchaseOrder, any>[] =
   {
     accessorKey: "date",
     header: "Date",
-    cell: ({ row }) => (
-      <div className="text-sm text-muted-foreground">{new Date(row.getValue("date")).toLocaleDateString()}</div>
-    ),
+    cell: ({ row }) => {
+      // Format date as yyyy-MM-dd to avoid hydration mismatch
+      const dateValue = row.getValue("date");
+      let formatted = "";
+      if (typeof dateValue === "string" || typeof dateValue === "number" || dateValue instanceof Date) {
+        const d = new Date(dateValue);
+        // Pad month and day for consistent output
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        formatted = `${dd}/${mm}/${yyyy}`;
+      }
+      return <div className="text-sm text-muted-foreground">{formatted}</div>;
+    },
   },
   {
     accessorKey: "status",

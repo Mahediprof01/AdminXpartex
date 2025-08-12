@@ -1,5 +1,47 @@
 "use client"
 
+// Filter options for DataTable
+const filterOptions = [
+  {
+    key: "status",
+    label: "Status",
+    options: [
+      { label: "Active", value: "active" },
+      { label: "Closed", value: "closed" },
+      { label: "Draft", value: "draft" },
+    ],
+  },
+  {
+    key: "type",
+    label: "Type",
+    options: [
+      { label: "Full-time", value: "Full-time" },
+      { label: "Part-time", value: "Part-time" },
+      { label: "Contract", value: "Contract" },
+    ],
+  },
+  {
+    key: "company",
+    label: "Company",
+    options: [
+      { label: "TechCorp Solutions", value: "TechCorp Solutions" },
+      { label: "Design Studio", value: "Design Studio" },
+      { label: "StartupXYZ", value: "StartupXYZ" },
+      { label: "CloudTech Inc", value: "CloudTech Inc" },
+    ],
+  },
+  {
+    key: "location",
+    label: "Location",
+    options: [
+      { label: "Remote", value: "Remote" },
+      { label: "New York, NY", value: "New York, NY" },
+      { label: "San Francisco, CA", value: "San Francisco, CA" },
+      { label: "Austin, TX", value: "Austin, TX" },
+    ],
+  },
+];
+
 import type { Row, Table, Column } from "@tanstack/react-table"
 import type { Job } from "@/lib/store"
 import { Button } from "@/components/ui/button"
@@ -220,35 +262,37 @@ export default function JobsPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6 p-6"
+      className="space-y-6 p-4 md:p-6"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             Jobs Management
           </h2>
           <p className="text-muted-foreground mt-1">Manage job postings and track applications</p>
         </div>
         <Button
           asChild
-          className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-lg"
+          className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-lg whitespace-nowrap"
         >
           <Link href="/jobs/new">
             <Plus className="mr-2 h-4 w-4" />
-            Post New Job
+            Add New
           </Link>
         </Button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg border-0 p-6">
+      <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
         <div className="flex items-center gap-2 mb-4">
           <Briefcase className="h-5 w-5 text-indigo-500" />
-          <h3 className="text-lg font-semibold">All Job Postings</h3>
-          <Badge variant="secondary" className="ml-auto">
-            {jobs.length} total
-          </Badge>
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            All Job Postings
+            <span className="ml-2 text-sm text-gray-500">(
+              <span className="font-semibold text-indigo-600">{jobs.length}</span> jobs
+            )</span>
+          </h3>
         </div>
-  <DataTable columns={columns} data={jobs as Job[]} searchKey="title" searchPlaceholder="Search jobs..." />
+        <DataTable columns={columns} data={jobs as Job[]} searchKey="title" searchPlaceholder="Search jobs..." filterOptions={filterOptions} />
       </div>
     </motion.div>
   )
