@@ -93,7 +93,7 @@ const getTypeColor = (type: string) => {
 const columns: import("@tanstack/react-table").ColumnDef<Job, any>[] = [
   {
     id: "select",
-  header: ({ table }: { table: Table<Job> }) => (
+    header: ({ table }: { table: Table<Job> }) => (
       <input
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
@@ -101,7 +101,7 @@ const columns: import("@tanstack/react-table").ColumnDef<Job, any>[] = [
         className="rounded border-gray-300"
       />
     ),
-  cell: ({ row }: { row: Row<Job> }) => (
+    cell: ({ row }: { row: Row<Job> }) => (
       <input
         type="checkbox"
         checked={row.getIsSelected()}
@@ -109,6 +109,11 @@ const columns: import("@tanstack/react-table").ColumnDef<Job, any>[] = [
         className="rounded border-gray-300"
       />
     ),
+  },
+  {
+    id: "sl",
+    header: "SL",
+    cell: ({ row }) => row.index + 1,
   },
   {
     accessorKey: "id",

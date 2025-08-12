@@ -51,7 +51,7 @@ export default function ProductsPage() {
   const columns: import("@tanstack/react-table").ColumnDef<Product, any>[] = [
     {
       id: "select",
-  header: ({ table }: { table: Table<Product> }) => (
+      header: ({ table }: { table: Table<Product> }) => (
         <input
           type="checkbox"
           checked={table.getIsAllPageRowsSelected()}
@@ -59,7 +59,7 @@ export default function ProductsPage() {
           className="rounded border-gray-300"
         />
       ),
-  cell: ({ row }: { row: Row<Product> }) => (
+      cell: ({ row }: { row: Row<Product> }) => (
         <input
           type="checkbox"
           checked={row.getIsSelected()}
@@ -67,6 +67,11 @@ export default function ProductsPage() {
           className="rounded border-gray-300"
         />
       ),
+    },
+    {
+      id: "sl",
+      header: "SL",
+      cell: ({ row }) => row.index + 1,
     },
     {
       accessorKey: "id",

@@ -85,7 +85,7 @@ const getCategoryColor = (category: string) => {
 const columns: import("@tanstack/react-table").ColumnDef<Blog, any>[] = [
   {
     id: "select",
-  header: ({ table }: { table: Table<Blog> }) => (
+    header: ({ table }: { table: Table<Blog> }) => (
       <input
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
@@ -93,7 +93,7 @@ const columns: import("@tanstack/react-table").ColumnDef<Blog, any>[] = [
         className="rounded border-gray-300"
       />
     ),
-  cell: ({ row }: { row: Row<Blog> }) => (
+    cell: ({ row }: { row: Row<Blog> }) => (
       <input
         type="checkbox"
         checked={row.getIsSelected()}
@@ -101,6 +101,11 @@ const columns: import("@tanstack/react-table").ColumnDef<Blog, any>[] = [
         className="rounded border-gray-300"
       />
     ),
+  },
+  {
+    id: "sl",
+    header: "SL",
+    cell: ({ row }) => row.index + 1,
   },
   {
     accessorKey: "id",

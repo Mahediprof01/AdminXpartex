@@ -80,7 +80,7 @@ const getStatusColor = (status: string) => {
 const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
   {
     id: "select",
-  header: ({ table }: { table: Table<Freelancer> }) => (
+    header: ({ table }: { table: Table<Freelancer> }) => (
       <input
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
@@ -88,7 +88,7 @@ const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
         className="rounded border-gray-300"
       />
     ),
-  cell: ({ row }: { row: Row<Freelancer> }) => (
+    cell: ({ row }: { row: Row<Freelancer> }) => (
       <input
         type="checkbox"
         checked={row.getIsSelected()}
@@ -96,6 +96,11 @@ const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
         className="rounded border-gray-300"
       />
     ),
+  },
+  {
+    id: "sl",
+    header: "SL",
+    cell: ({ row }) => row.index + 1,
   },
   {
     accessorKey: "id",
