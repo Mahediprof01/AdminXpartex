@@ -63,29 +63,29 @@ const menuModules = [
       {
         title: "Order",
         children: [
-          { title: "Whole Sell", url: "/orders?type=wholesale" },
-          { title: "Retail", url: "/orders?type=retail" },
+          { title: "Whole Sale", url: "/orders-wholesale" },
+          { title: "Retail", url: "/orders-retail" },
         ],
       },
       {
         title: "Purchase",
         children: [
-          { title: "Whole Sell", url: "/purchase-orders?type=wholesale" },
-          { title: "Retail", url: "/purchase-orders?type=retail" },
+          { title: "Whole Sale", url: "/purchase-wholesale" },
+          { title: "Retail", url: "/purchase-retail" },
         ],
       },
       {
         title: "Return",
         children: [
-          { title: "Whole Sell", url: "/returns?type=wholesale" },
-          { title: "Retail", url: "/returns?type=retail" },
+          { title: "Whole Sale", url: "/return-wholesale" },
+          { title: "Retail", url: "/return-retail" },
         ],
       },
       {
-        title: "Logistic",
+        title: "Logistics",
         children: [
-          { title: "Whole Sell", url: "/logistics?type=wholesale" },
-          { title: "Retail", url: "/logistics?type=retail" },
+          { title: "Whole Sale", url: "/logistics-wholesale" },
+          { title: "Retail", url: "/logistics-retail" },
         ],
       },
       { title: "Rental", url: "/rental" },
@@ -96,6 +96,20 @@ const menuModules = [
     icon: Briefcase,
     children: [
       { title: "Jobs", url: "/jobs" },
+    ],
+  },
+  {
+    title: "News Management",
+    icon: FileText,
+    children: [
+      { title: "News", url: "/news" },
+    ],
+  },
+  {
+    title: "Freelancers Management",
+    icon: UserCheck,
+    children: [
+      { title: "Freelancers", url: "/freelancers" },
     ],
   },
   {
