@@ -50,8 +50,8 @@ const menuModules = [
       {
         title: "Suppliers",
         children: [
-          { title: "Whole Sell", url: "/suppliers?type=wholesale" },
-          { title: "Retail", url: "/suppliers?type=retail" },
+          { title: "Whole Sell", url: "/supplier-wholesale" },
+          { title: "Retail", url: "/supplier-retail" },
         ],
       },
     ],
@@ -94,30 +94,29 @@ const menuModules = [
   {
     title: "Job Management",
     icon: Briefcase,
-    children: [
-      { title: "Jobs", url: "/jobs" },
-    ],
+    children: [{ title: "Jobs", url: "/jobs" }],
   },
   {
     title: "Customer Support",
     icon: UserCheck,
-    children: [
-      { title: "Support Center", url: "/support" },
-    ],
+    children: [{ title: "Support Center", url: "/support" }],
   },
 ];
-
 
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 
 export function AppSidebar() {
   const pathname = usePathname();
-  const [openDropdowns, setOpenDropdowns] = useState<{ [key: string]: boolean }>({});
+  const [openDropdowns, setOpenDropdowns] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   // Move Customer Support to the bottom
   const mainModules = menuModules.filter((m) => m.title !== "Customer Support");
-  const customerSupportModule = menuModules.find((m) => m.title === "Customer Support");
+  const customerSupportModule = menuModules.find(
+    (m) => m.title === "Customer Support"
+  );
 
   const handleDropdown = (title: string) => {
     setOpenDropdowns((prev) => ({ ...prev, [title]: !prev[title] }));
@@ -128,7 +127,8 @@ export function AppSidebar() {
     return (
       <ul className={isSub ? "pl-4 border-l border-gray-200 ml-2" : "pl-0"}>
         {items.map((item) => {
-          const hasChildren = Array.isArray(item.children) && item.children.length > 0;
+          const hasChildren =
+            Array.isArray(item.children) && item.children.length > 0;
           const key = parentKey + item.title;
           return (
             <li key={key} className="mb-1">
@@ -137,14 +137,18 @@ export function AppSidebar() {
                   <button
                     type="button"
                     className="flex items-center w-full h-11 px-3 rounded-xl transition-all duration-200 hover:bg-sidebar-accent/50 font-medium gap-3"
-                    style={{whiteSpace: 'nowrap'}}
+                    style={{ whiteSpace: "nowrap" }}
                     onClick={() => handleDropdown(key)}
                   >
-                    {item.icon && <item.icon className="size-5 text-purple-600" />}
+                    {item.icon && (
+                      <item.icon className="size-5 text-purple-600" />
+                    )}
                     <span className="truncate">{item.title}</span>
                     <span className="ml-auto flex items-center">
                       <ChevronRight
-                        className={`size-4 transition-transform duration-200 ${openDropdowns[key] ? "rotate-90" : "rotate-0"}`}
+                        className={`size-4 transition-transform duration-200 ${
+                          openDropdowns[key] ? "rotate-90" : "rotate-0"
+                        }`}
                       />
                     </span>
                   </button>
@@ -158,9 +162,11 @@ export function AppSidebar() {
                 <Link href={item.url || "#"} legacyBehavior>
                   <a
                     className={`flex items-center h-10 px-3 rounded-lg transition-all duration-200 hover:bg-sidebar-accent/50 font-normal gap-3 ${
-                      pathname === item.url ? "bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-200 shadow-sm text-purple-900" : ""
+                      pathname === item.url
+                        ? "bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-200 shadow-sm text-purple-900"
+                        : ""
                     }`}
-                    style={{whiteSpace: 'nowrap'}}
+                    style={{ whiteSpace: "nowrap" }}
                   >
                     {item.icon && <item.icon className="size-5" />}
                     <span className="truncate">{item.title}</span>
@@ -175,7 +181,7 @@ export function AppSidebar() {
   };
 
   return (
-  <Sidebar className="border-r-0 min-w-[250px] max-w-[270px] w-[260px]">
+    <Sidebar className="border-r-0 min-w-[250px] max-w-[270px] w-[260px]">
       <SidebarHeader className="border-b border-sidebar-border">
         <div className="flex items-center gap-3 px-4 py-3">
           <div className="flex aspect-square size-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg">
