@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import type { Row, Table, Column } from "@tanstack/react-table"
-import type { Product } from "@/lib/store"
-import { Button } from "@/components/ui/button"
-import { DataTable } from "@/components/data-table"
-import { Badge } from "@/components/ui/badge"
-import { MoreHorizontal, Plus, Eye, Edit, Trash, Package } from "lucide-react"
+import type { Row, Table, Column } from "@tanstack/react-table";
+import type { Product } from "@/lib/store";
+import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/data-table";
+import { Badge } from "@/components/ui/badge";
+import { MoreHorizontal, Plus, Eye, Edit, Trash, Package } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,19 +13,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { useProductStore } from "@/lib/store"
+} from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useProductStore } from "@/lib/store";
 
 export default function ProductsPage() {
-  const { products, deleteProduct } = useProductStore()
+  const { products, deleteProduct } = useProductStore();
 
   const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this product?")) {
-      deleteProduct(id)
+      deleteProduct(id);
     }
-  }
+  };
 
   const filterOptions = [
     {
@@ -46,7 +46,7 @@ export default function ProductsPage() {
         { label: "Inactive", value: "inactive" },
       ],
     },
-  ]
+  ];
 
   const columns: import("@tanstack/react-table").ColumnDef<Product, any>[] = [
     {
@@ -84,14 +84,17 @@ export default function ProductsPage() {
     },
     {
       accessorKey: "name",
-  header: ({ column }: { column: Column<Product, unknown> }) => {
+      header: ({ column }: { column: Column<Product, unknown> }) => {
         return (
-          <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
             Product Name
           </Button>
-        )
+        );
       },
-  cell: ({ row }: { row: Row<Product> }) => (
+      cell: ({ row }: { row: Row<Product> }) => (
         <Link
           href={`/products/${row.original.id}`}
           className="font-medium text-blue-600 hover:text-blue-800 hover:underline cursor-pointer block max-w-[150px] sm:max-w-[200px] md:max-w-[300px] truncate"
@@ -104,7 +107,10 @@ export default function ProductsPage() {
       accessorKey: "category",
       header: "Category",
       cell: ({ row }) => (
-        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 whitespace-nowrap">
+        <Badge
+          variant="outline"
+          className="bg-blue-50 text-blue-700 border-blue-200 whitespace-nowrap"
+        >
           {row.getValue("category")}
         </Badge>
       ),
@@ -112,55 +118,99 @@ export default function ProductsPage() {
     {
       accessorKey: "price",
       header: "Price",
-  cell: ({ row }: { row: Row<Product> }) => {
-        const price = Number.parseFloat(row.getValue("price"))
+      cell: ({ row }: { row: Row<Product> }) => {
+        const price = Number.parseFloat(row.getValue("price"));
         const formatted = new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
-        }).format(price)
-        return <div className="font-semibold text-green-600 whitespace-nowrap">{formatted}</div>
+        }).format(price);
+        return (
+          <div className="font-semibold text-green-600 whitespace-nowrap">
+            {formatted}
+          </div>
+        );
+      },
+      footer: ({ table }) => {
+        const total = table
+          .getFilteredRowModel()
+          .rows.reduce((sum, row) => sum + Number(row.getValue("price")), 0);
+
+        const formattedTotal = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(total);
+
+        return (
+          <div className="font-bold text-green-700 whitespace-nowrap">
+            Total: {formattedTotal}
+          </div>
+        );
       },
     },
+
     {
       accessorKey: "stock",
       header: "Stock",
-  cell: ({ row }: { row: Row<Product> }) => {
-        const stock = row.getValue("stock") as number
+      cell: ({ row }: { row: Row<Product> }) => {
+        const stock = row.getValue("stock") as number;
         return (
           <div
             className={`font-medium whitespace-nowrap ${
-              stock === 0 ? "text-red-500" : stock < 50 ? "text-orange-500" : "text-green-600"
+              stock === 0
+                ? "text-red-500"
+                : stock < 50
+                ? "text-orange-500"
+                : "text-green-600"
             }`}
           >
             {stock} units
           </div>
-        )
+        );
+      },
+
+      footer: ({ table }) => {
+        const totalStock = table
+          .getFilteredRowModel()
+          .rows.reduce((sum, row) => sum + Number(row.getValue("stock")), 0);
+
+        return (
+          <div className="font-bold text-green-700 whitespace-nowrap">
+            Total: {totalStock} units
+          </div>
+        );
       },
     },
     {
       accessorKey: "status",
       header: "Status",
-  cell: ({ row }: { row: Row<Product> }) => {
-        const status = row.getValue("status")
+      cell: ({ row }: { row: Row<Product> }) => {
+        const status = row.getValue("status");
         return (
           <Badge
             variant={status === "active" ? "default" : "secondary"}
-            className={status === "active" ? "bg-green-100 text-green-700 hover:bg-green-200" : ""}
+            className={
+              status === "active"
+                ? "bg-green-100 text-green-700 hover:bg-green-200"
+                : ""
+            }
           >
             {String(status)}
           </Badge>
-        )
+        );
       },
     },
     {
       id: "actions",
-  cell: ({ row }: { row: Row<Product> }) => {
-        const product = row.original
+      cell: ({ row }: { row: Row<Product> }) => {
+        const product = row.original;
 
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-purple-100">
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0 hover:bg-purple-100"
+              >
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
@@ -168,13 +218,19 @@ export default function ProductsPage() {
             <DropdownMenuContent align="end" className="w-48">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem asChild>
-                <Link href={`/products/${product.id}`} className="cursor-pointer">
+                <Link
+                  href={`/products/${product.id}`}
+                  className="cursor-pointer"
+                >
                   <Eye className="mr-2 h-4 w-4 text-blue-500" />
                   View Details
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/products/${product.id}/edit`} className="cursor-pointer">
+                <Link
+                  href={`/products/${product.id}/edit`}
+                  className="cursor-pointer"
+                >
                   <Edit className="mr-2 h-4 w-4 text-green-500" />
                   Edit Product
                 </Link>
@@ -189,10 +245,10 @@ export default function ProductsPage() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        )
+        );
       },
     },
-  ]
+  ];
 
   return (
     <motion.div
@@ -203,9 +259,7 @@ export default function ProductsPage() {
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-            
-          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"></h2>
           <p className="text-muted-foreground mt-1"></p>
         </div>
         <Button
@@ -236,5 +290,5 @@ export default function ProductsPage() {
         />
       </div>
     </motion.div>
-  )
+  );
 }

@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Save } from "lucide-react";
+import { useState } from "react";
 
 const orderSchema = z.object({
   id: z.string().min(1, "Order ID is required"),
@@ -32,6 +33,7 @@ type OrderFormData = z.infer<typeof orderSchema>;
 
 export default function CreateOrderPage() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<OrderFormData>({
     resolver: zodResolver(orderSchema),
     defaultValues: {
@@ -52,7 +54,7 @@ export default function CreateOrderPage() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
+    <div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -75,129 +77,140 @@ export default function CreateOrderPage() {
           </div>
         </div>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Order ID */}
-          <div>
-            <Label>Order ID</Label>
-            <Input {...form.register("id")} placeholder="ORD005" />
-            {form.formState.errors.id && (
-              <p className="text-red-500 text-sm">
-                {form.formState.errors.id.message}
-              </p>
-            )}
-          </div>
+        <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Order ID */}
+              <div>
+                <Label>Order ID</Label>
+                <Input {...form.register("id")} placeholder="ORD005" />
+                {form.formState.errors.id && (
+                  <p className="text-red-500 text-sm">
+                    {form.formState.errors.id.message}
+                  </p>
+                )}
+              </div>
 
-          {/* Customer Name */}
-          <div>
-            <Label>Customer Name</Label>
-            <Input {...form.register("customer")} placeholder="John Doe" />
-            {form.formState.errors.customer && (
-              <p className="text-red-500 text-sm">
-                {form.formState.errors.customer.message}
-              </p>
-            )}
-          </div>
+              {/* Customer Name */}
+              <div>
+                <Label>Customer Name</Label>
+                <Input {...form.register("customer")} placeholder="John Doe" />
+                {form.formState.errors.customer && (
+                  <p className="text-red-500 text-sm">
+                    {form.formState.errors.customer.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Items */}
+              <div>
+                <Label>Items</Label>
+                <Input
+                  type="number"
+                  {...form.register("items", { valueAsNumber: true })}
+                />
+                {form.formState.errors.items && (
+                  <p className="text-red-500 text-sm">
+                    {form.formState.errors.items.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Total */}
+              <div>
+                <Label>Total (USD)</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  {...form.register("total", { valueAsNumber: true })}
+                />
+                {form.formState.errors.total && (
+                  <p className="text-red-500 text-sm">
+                    {form.formState.errors.total.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Order Date */}
+              <div>
+                <Label>Order Date</Label>
+                <Input type="date" {...form.register("orderDate")} />
+                {form.formState.errors.orderDate && (
+                  <p className="text-red-500 text-sm">
+                    {form.formState.errors.orderDate.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Payment Status */}
+              <div>
+                <Label>Payment Status</Label>
+                <Select
+                  onValueChange={(val) =>
+                    form.setValue(
+                      "paymentStatus",
+                      val as OrderFormData["paymentStatus"]
+                    )
+                  }
+                  defaultValue={form.getValues("paymentStatus")}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select payment status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="paid">Paid</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="failed">Failed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Shipping Status */}
+            <div>
+              <Label>Shipping Status</Label>
+              <Select
+                onValueChange={(val) =>
+                  form.setValue(
+                    "shippingStatus",
+                    val as OrderFormData["shippingStatus"]
+                  )
+                }
+                defaultValue={form.getValues("shippingStatus")}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select shipping status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="delivered">Delivered</SelectItem>
+                  <SelectItem value="shipped">Shipped</SelectItem>
+                  <SelectItem value="processing">Processing</SelectItem>
+                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Submit */}
+
+            <div className="flex items-center justify-end gap-4 pt-4">
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white shadow-lg"
+              >
+                <Save className="mr-2 h-4 w-4" />
+                {isLoading ? "Creating..." : "Create Order"}
+              </Button>
+
+              <Button type="button" variant="outline" asChild>
+                <Link href="/orders">Cancel</Link>
+              </Button>
+            </div>
+          </form>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Items */}
-          <div>
-            <Label>Items</Label>
-            <Input
-              type="number"
-              {...form.register("items", { valueAsNumber: true })}
-            />
-            {form.formState.errors.items && (
-              <p className="text-red-500 text-sm">
-                {form.formState.errors.items.message}
-              </p>
-            )}
-          </div>
-
-          {/* Total */}
-          <div>
-            <Label>Total (USD)</Label>
-            <Input
-              type="number"
-              step="0.01"
-              {...form.register("total", { valueAsNumber: true })}
-            />
-            {form.formState.errors.total && (
-              <p className="text-red-500 text-sm">
-                {form.formState.errors.total.message}
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Order Date */}
-          <div>
-            <Label>Order Date</Label>
-            <Input type="date" {...form.register("orderDate")} />
-            {form.formState.errors.orderDate && (
-              <p className="text-red-500 text-sm">
-                {form.formState.errors.orderDate.message}
-              </p>
-            )}
-          </div>
-
-          {/* Payment Status */}
-          <div>
-            <Label>Payment Status</Label>
-            <Select
-              onValueChange={(val) =>
-                form.setValue(
-                  "paymentStatus",
-                  val as OrderFormData["paymentStatus"]
-                )
-              }
-              defaultValue={form.getValues("paymentStatus")}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select payment status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="paid">Paid</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="failed">Failed</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* Shipping Status */}
-        <div>
-          <Label>Shipping Status</Label>
-          <Select
-            onValueChange={(val) =>
-              form.setValue(
-                "shippingStatus",
-                val as OrderFormData["shippingStatus"]
-              )
-            }
-            defaultValue={form.getValues("shippingStatus")}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select shipping status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="delivered">Delivered</SelectItem>
-              <SelectItem value="shipped">Shipped</SelectItem>
-              <SelectItem value="processing">Processing</SelectItem>
-              <SelectItem value="cancelled">Cancelled</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Submit */}
-        <Button
-          type="submit"
-          className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white"
-        >
-          Create Order
-        </Button>
-        </form>
       </motion.div>
     </div>
   );
