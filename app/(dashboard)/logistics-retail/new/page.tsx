@@ -16,26 +16,29 @@ import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-export default function NewFreelancerPage() {
+export default function NewLogisticsOrderPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    skills: "",
-    rating: "4.9",
-    status: "available",
+    orderId: "",
+    customer: "",
+    partner: "",
+    status: "Pending",
+    transactionId: "",
+    price: "",
+    completed: false,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // TODO: Add logic to save freelancer
+    // TODO: Add logic to save logistics order
     setTimeout(() => {
       setIsLoading(false);
-      window.location.href = "/freelancers";
+      window.location.href = "/logistics-retail";
     }, 500);
   };
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -46,66 +49,64 @@ export default function NewFreelancerPage() {
       transition={{ duration: 0.3 }}
       className="space-y-6 p-4 md:p-6"
     >
-      {/* Header Section */}
       <div className="flex items-center gap-4 mb-4">
         <Button variant="ghost" size="icon" asChild>
-          <Link href="/freelancers">
+          <Link href="/logistics-retail">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
         <div>
-          <h1 className="text-2xl font-bold">Add New Freelancer</h1>
+          <h1 className="text-2xl font-bold">Add New Retail Logistics Order</h1>
           <p className="text-muted-foreground">
-            Fill in the details to add a new freelancer profile.
+            Create a new retail logistics order in your inventory
           </p>
         </div>
       </div>
-
-      {/* Form Section */}
       <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
         <Card className="border-0 shadow-none max-w-full">
           <CardHeader>
-            <CardTitle>Freelancer Details</CardTitle>
+            <CardTitle>Order Details</CardTitle>
           </CardHeader>
           <CardContent>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label>Name</Label>
+                  <Label>Order ID</Label>
                   <Input
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
+                    value={formData.orderId}
+                    onChange={(e) => handleChange("orderId", e.target.value)}
                     required
                   />
                 </div>
                 <div>
-                  <Label>Skills</Label>
+                  <Label>Customer Name</Label>
                   <Input
-                    value={formData.skills}
-                    onChange={(e) => handleChange("skills", e.target.value)}
+                    value={formData.customer}
+                    onChange={(e) => handleChange("customer", e.target.value)}
                     required
                   />
                 </div>
               </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label>Rating</Label>
-                  <Select
-                    value={formData.rating}
-                    onValueChange={(value) => handleChange("rating", value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select rating" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="4.9">4.9</SelectItem>
-                      <SelectItem value="4.8">4.8</SelectItem>
-                      <SelectItem value="4.7">4.7</SelectItem>
-                      <SelectItem value="4.6">4.6</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label>Logistics Partner</Label>
+                  <Input
+                    value={formData.partner}
+                    onChange={(e) => handleChange("partner", e.target.value)}
+                    required
+                  />
                 </div>
+                <div>
+                  <Label>Transaction ID</Label>
+                  <Input
+                    value={formData.transactionId}
+                    onChange={(e) =>
+                      handleChange("transactionId", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <Label>Status</Label>
                   <Select
@@ -116,26 +117,41 @@ export default function NewFreelancerPage() {
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="available">Available</SelectItem>
-                      <SelectItem value="busy">Busy</SelectItem>
-                      <SelectItem value="inactive">Inactive</SelectItem>
+                      <SelectItem value="Pending">Pending</SelectItem>
+                      <SelectItem value="In Transit">In Transit</SelectItem>
+                      <SelectItem value="Delivered">Delivered</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
 
-              {/* Actions */}
+                <div>
+                  <Label>Price</Label>
+                  <Input
+                    value={formData.price}
+                    onChange={(e) => handleChange("price", e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={formData.completed}
+                  onChange={(e) => handleChange("completed", e.target.checked)}
+                />
+                <Label>Completed</Label>
+              </div>
               <div className="flex items-center justify-end gap-4 pt-4">
                 <Button
                   type="submit"
-                  className="bg-gradient-to-r from-green-600 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg"
                   disabled={isLoading}
+                  className="bg-gradient-to-r from-pink-600 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white shadow-lg"
                 >
                   <Save className="mr-2 h-4 w-4" />
-                  {isLoading ? "Saving..." : "Submit"}
+                  {isLoading ? "Creating..." : "Create Retail Logistics Order"}
                 </Button>
+
                 <Button type="button" variant="outline" asChild>
-                  <Link href="/freelancers">Cancel</Link>
+                  <Link href="/logistics-retail">Cancel</Link>
                 </Button>
               </div>
             </form>

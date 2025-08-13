@@ -103,6 +103,11 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
     id: "sl",
     header: "SL",
     cell: ({ row }) => row.index + 1,
+    footer: ({ table }) => {
+      return (
+        <div className="font-bold text-gray-700 whitespace-nowrap">Total</div>
+      );
+    },
   },
   {
     accessorKey: "id",
@@ -136,8 +141,8 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
         .getFilteredRowModel()
         .rows.reduce((sum, row) => sum + Number(row.getValue("items")), 0);
       return (
-        <div className="font-bold text-blue-700 whitespace-nowrap">
-          Total: {tableItems} items
+        <div className="font-bold text-gray-700 whitespace-nowrap">
+          {tableItems} items
         </div>
       );
     },
@@ -190,7 +195,10 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Link href={`/orders-wholesale/${order.id}`} className="cursor-pointer">
+              <Link
+                href={`/orders-wholesale/${order.id}`}
+                className="cursor-pointer"
+              >
                 <Eye className="mr-2 h-4 w-4 text-blue-500" />
                 View Details
               </Link>
@@ -229,7 +237,9 @@ export default function OrdersWholesalePage() {
           <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
             Wholesale Orders
           </h2>
-          <p className="text-muted-foreground mt-1">All wholesale orders in the system.</p>
+          <p className="text-muted-foreground mt-1">
+            All wholesale orders in the system.
+          </p>
         </div>
         <Button
           asChild

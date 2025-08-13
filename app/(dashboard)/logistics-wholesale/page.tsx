@@ -199,7 +199,7 @@ export default function LogisticsWholesalePage() {
           asChild
           className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg whitespace-nowrap"
         >
-          <Link href="/logistics-wholsale/new">
+          <Link href="/logistics-wholesale/new">
             <Plus className="mr-2 h-4 w-4" />
             Add Order
           </Link>
