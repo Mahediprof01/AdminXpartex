@@ -111,11 +111,24 @@ const menuModules = [
     ],
   },
   {
-    title: "LMS",
+    title: "Learning Management",
     icon: FileText,
     children: [
-      { title: "Online Course", url: "/online-course" },
-      { title: "E-book", url: "/e-book" },
+      {
+        title: "Student Management",
+        children: [
+          { title: "Students", url: "/students" },
+          { title: "Enrollments", url: "/enrollments" },
+        ],
+      },
+      {
+        title: "Course Management",
+        children: [
+          { title: "Courses", url: "/courses" },
+          { title: "Online Course", url: "/online-course" },
+          { title: "E-book", url: "/e-book" },
+        ],
+      },
     ],
   },
   {
