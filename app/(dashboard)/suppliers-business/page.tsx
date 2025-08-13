@@ -182,9 +182,9 @@ export default function SuppliersBusinessPage() {
 			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 				<div>
 					<h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-						Suppliers Business
+						
 					</h2>
-					<p className="text-muted-foreground mt-1">Manage all suppliers in the system.</p>
+					<p className="text-muted-foreground mt-1"></p>
 				</div>
 				<Button
 					asChild
