@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { DataTable } from "@/components/data-table"
-import { Badge } from "@/components/ui/badge"
-import { MoreHorizontal, Plus, Eye, Edit, Trash, Store } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/data-table";
+import { Badge } from "@/components/ui/badge";
+import { MoreHorizontal, Plus, Eye, Edit, Trash, Store } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,23 +11,22 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { useVendorStore } from "@/lib/store"
+} from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useVendorStore } from "@/lib/store";
 
-
-import type { Row, Table, Column } from "@tanstack/react-table"
-import type { Vendor } from "@/lib/store"
+import type { Row, Table, Column } from "@tanstack/react-table";
+import type { Vendor } from "@/lib/store";
 
 export default function VendorsPage() {
-  const { vendors, deleteVendor } = useVendorStore()
+  const { vendors, deleteVendor } = useVendorStore();
 
   const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this vendor?")) {
-      deleteVendor(id)
+      deleteVendor(id);
     }
-  }
+  };
 
   const filterOptions = [
     {
@@ -38,7 +37,7 @@ export default function VendorsPage() {
         { label: "Inactive", value: "inactive" },
       ],
     },
-  ]
+  ];
 
   const columns: import("@tanstack/react-table").ColumnDef<Vendor, any>[] = [
     {
@@ -68,7 +67,7 @@ export default function VendorsPage() {
     {
       accessorKey: "id",
       header: "Vendor ID",
-  cell: ({ row }: { row: Row<Vendor> }) => (
+      cell: ({ row }: { row: Row<Vendor> }) => (
         <div className="font-mono text-sm bg-purple-100 px-2 py-1 rounded text-purple-700 max-w-[100px] truncate">
           {row.getValue("id")}
         </div>
@@ -76,14 +75,17 @@ export default function VendorsPage() {
     },
     {
       accessorKey: "name",
-  header: ({ column }: { column: Column<Vendor, unknown> }) => {
+      header: ({ column }: { column: Column<Vendor, unknown> }) => {
         return (
-          <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
             Vendor Name
           </Button>
-        )
+        );
       },
-  cell: ({ row }: { row: Row<Vendor> }) => (
+      cell: ({ row }: { row: Row<Vendor> }) => (
         <Link
           href={`/vendors/${row.original.id}`}
           className="font-medium text-purple-600 hover:text-purple-800 hover:underline cursor-pointer block max-w-[150px] sm:max-w-[200px] md:max-w-[300px] truncate"
@@ -104,53 +106,97 @@ export default function VendorsPage() {
     {
       accessorKey: "phone",
       header: "Phone",
-  cell: ({ row }: { row: Row<Vendor> }) => <div className="text-sm whitespace-nowrap">{row.getValue("phone")}</div>,
+      cell: ({ row }: { row: Row<Vendor> }) => (
+        <div className="text-sm whitespace-nowrap">{row.getValue("phone")}</div>
+      ),
     },
     {
       accessorKey: "products",
       header: "Products",
-  cell: ({ row }: { row: Row<Vendor> }) => (
-        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 whitespace-nowrap">
+      cell: ({ row }: { row: Row<Vendor> }) => (
+        <Badge
+          variant="outline"
+          className="bg-blue-50 text-blue-700 border-blue-200 whitespace-nowrap"
+        >
           {row.getValue("products")} items
         </Badge>
       ),
+
+      footer: ({ table }) => {
+        const totalProducts = table
+          .getFilteredRowModel()
+          .rows.reduce((sum, row) => sum + Number(row.getValue("products")), 0);
+
+        return (
+          <div className="font-bold text-blue-700 whitespace-nowrap">
+            Total: {totalProducts} items
+          </div>
+        );
+      },
     },
     {
       accessorKey: "revenue",
       header: "Revenue",
-  cell: ({ row }: { row: Row<Vendor> }) => {
-        const revenue = row.getValue("revenue") as number
+      cell: ({ row }: { row: Row<Vendor> }) => {
+        const revenue = row.getValue("revenue") as number;
         const formatted = new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
-        }).format(revenue)
-        return <div className="font-semibold text-green-600 whitespace-nowrap">{formatted}</div>
+        }).format(revenue);
+        return (
+          <div className="font-semibold text-green-600 whitespace-nowrap">
+            {formatted}
+          </div>
+        );
+      },
+      footer: ({ table }) => {
+        const totalRevenue = table
+          .getFilteredRowModel()
+          .rows.reduce((sum, row) => sum + Number(row.getValue("revenue")), 0);
+
+        const formattedTotal = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(totalRevenue);
+
+        return (
+          <div className="font-bold text-green-700 whitespace-nowrap">
+            Total: {formattedTotal}
+          </div>
+        );
       },
     },
     {
       accessorKey: "status",
       header: "Status",
-  cell: ({ row }: { row: Row<Vendor> }) => {
-        const status = row.getValue("status")
+      cell: ({ row }: { row: Row<Vendor> }) => {
+        const status = row.getValue("status");
         return (
           <Badge
             variant={status === "active" ? "default" : "secondary"}
-            className={status === "active" ? "bg-green-100 text-green-700 hover:bg-green-200" : ""}
+            className={
+              status === "active"
+                ? "bg-green-100 text-green-700 hover:bg-green-200"
+                : ""
+            }
           >
             {String(status)}
           </Badge>
-        )
+        );
       },
     },
     {
       id: "actions",
-  cell: ({ row }: { row: Row<Vendor> }) => {
-        const vendor = row.original
+      cell: ({ row }: { row: Row<Vendor> }) => {
+        const vendor = row.original;
 
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-purple-100">
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0 hover:bg-purple-100"
+              >
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
@@ -164,7 +210,10 @@ export default function VendorsPage() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/vendors/${vendor.id}/edit`} className="cursor-pointer">
+                <Link
+                  href={`/vendors/${vendor.id}/edit`}
+                  className="cursor-pointer"
+                >
                   <Edit className="mr-2 h-4 w-4 text-green-500" />
                   Edit Vendor
                 </Link>
@@ -179,10 +228,10 @@ export default function VendorsPage() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        )
+        );
       },
     },
-  ]
+  ];
 
   return (
     <motion.div
@@ -193,9 +242,7 @@ export default function VendorsPage() {
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            
-          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"></h2>
           <p className="text-muted-foreground mt-1"></p>
         </div>
         <Button
@@ -226,5 +273,5 @@ export default function VendorsPage() {
         />
       </div>
     </motion.div>
-  )
+  );
 }

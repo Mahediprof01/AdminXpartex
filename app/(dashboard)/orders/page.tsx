@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { table } from "console";
 
 const orders = [
   {
@@ -143,6 +144,18 @@ const columns: import("@tanstack/react-table").ColumnDef<Order, any>[] = [
         {row.getValue("items")} items
       </Badge>
     ),
+
+    footer: ({ table }) => {
+      const tableItems = table
+        .getFilteredRowModel()
+        .rows.reduce((sum, row) => sum + Number(row.getValue("items")), 0);
+
+      return (
+        <div className="font-bold text-blue-700 whitespace-nowrap">
+          Total: {tableItems} items
+        </div>
+      );
+    },
   },
   {
     accessorKey: "total",
@@ -154,6 +167,23 @@ const columns: import("@tanstack/react-table").ColumnDef<Order, any>[] = [
         currency: "USD",
       }).format(total);
       return <div className="font-semibold text-green-600">{formatted}</div>;
+    },
+
+    footer: ({ table }) => {
+      const total = table
+        .getFilteredRowModel()
+        .rows.reduce((sum, row) => sum + Number(row.getValue("total")), 0);
+
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(total);
+
+      return (
+        <div className="font-bold text-green-700 whitespace-nowrap">
+          Total: {formatted}
+        </div>
+      );
     },
   },
   {
@@ -241,12 +271,8 @@ export default function OrdersPage() {
     >
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
-            
-          </h2>
-          <p className="text-muted-foreground mt-1">
-             
-          </p>
+          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent"></h2>
+          <p className="text-muted-foreground mt-1"></p>
         </div>
         <Button
           asChild
