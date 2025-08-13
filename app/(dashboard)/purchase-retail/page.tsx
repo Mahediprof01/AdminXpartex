@@ -95,6 +95,11 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
     id: "sl",
     header: "SL",
     cell: ({ row }) => row.index + 1,
+    footer: ({ table }) => {
+      return (
+        <div className="font-bold text-gray-700 whitespace-nowrap">Total</div>
+      );
+    },
   },
   {
     accessorKey: "id",
@@ -115,9 +120,7 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
   {
     accessorKey: "product",
     header: "Product",
-    cell: ({ row }) => (
-      <div className="text-sm">{row.getValue("product")}</div>
-    ),
+    cell: ({ row }) => <div className="text-sm">{row.getValue("product")}</div>,
   },
   {
     accessorKey: "quantity",
@@ -131,7 +134,7 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
         .rows.reduce((sum, row) => sum + Number(row.getValue("quantity")), 0);
       return (
         <div className="font-bold text-gray-700 whitespace-nowrap ">
-          Total: {totalQty} units
+          {totalQty} units
         </div>
       );
     },
@@ -148,8 +151,8 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
         .getFilteredRowModel()
         .rows.reduce((sum, row) => sum + Number(row.getValue("price")), 0);
       return (
-        <div className="font-bold text-orange-700 whitespace-nowrap">
-          Total: {totalPrice} BDT
+        <div className="font-bold text-gray-700 whitespace-nowrap">
+          {totalPrice} BDT
         </div>
       );
     },
@@ -166,8 +169,8 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
         .getFilteredRowModel()
         .rows.reduce((sum, row) => sum + Number(row.getValue("total")), 0);
       return (
-        <div className="font-bold text-green-700 whitespace-nowrap">
-          Total: {grandTotal} BDT
+        <div className="font-bold text-gray-700 whitespace-nowrap">
+          {grandTotal} BDT
         </div>
       );
     },
@@ -211,10 +214,7 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="h-8 w-8 p-0 hover:bg-orange-100"
-            >
+            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-orange-100">
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
@@ -261,9 +261,7 @@ export default function PurchaseRetailPage() {
     >
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
-            
-          </h2>
+          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent"></h2>
           <p className="text-muted-foreground mt-1"></p>
         </div>
         <Button
