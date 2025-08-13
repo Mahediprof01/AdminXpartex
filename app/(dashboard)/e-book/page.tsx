@@ -161,11 +161,21 @@ const columns: import("@tanstack/react-table").ColumnDef<Ebook, any>[] = [
 			<div className="font-mono text-sm bg-pink-100 px-2 py-1 rounded text-pink-700">{row.getValue("id")}</div>
 		),
 	},
-	{
-		accessorKey: "title",
-		header: "Title",
-		cell: ({ row }: { row: Row<Ebook> }) => <div className="font-medium max-w-xs truncate">{row.getValue("title")}</div>,
-	},
+       {
+	       accessorKey: "title",
+	       header: "Title",
+	       cell: ({ row }: { row: Row<Ebook> }) => {
+		       const ebook = row.original;
+		       return (
+			       <Link
+				       href={`/e-book/${ebook.id}`}
+				       className="font-medium max-w-xs truncate text-blue-600 hover:underline block"
+			       >
+				       {row.getValue("title")}
+			       </Link>
+		       );
+	       },
+       },
 	{
 		accessorKey: "author",
 		header: "Author",
@@ -229,17 +239,31 @@ const columns: import("@tanstack/react-table").ColumnDef<Ebook, any>[] = [
 								View E-Book
 							</Link>
 						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<Link href={`/e-book/${ebook.id}/edit`} className="cursor-pointer">
-								<Edit className="mr-2 h-4 w-4 text-green-500" />
-								Edit E-Book
-							</Link>
-						</DropdownMenuItem>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem className="text-red-600 cursor-pointer focus:text-red-600">
-							<Trash className="mr-2 h-4 w-4" />
-							Delete E-Book
-						</DropdownMenuItem>
+			       <DropdownMenuItem asChild>
+				       <Link href={`/e-book/update/${ebook.id}`} className="cursor-pointer">
+					       <Edit className="mr-2 h-4 w-4 text-green-500" />
+					       Edit E-Book
+				       </Link>
+			       </DropdownMenuItem>
+			       <DropdownMenuSeparator />
+			       {ebook.status === "published" && (
+				       <DropdownMenuItem className="text-yellow-600 cursor-pointer focus:text-yellow-600">
+					       <Trash className="mr-2 h-4 w-4" />
+					       Archive E-Book
+				       </DropdownMenuItem>
+			       )}
+			       {ebook.status === "archived" && (
+				       <DropdownMenuItem className="text-green-600 cursor-pointer focus:text-green-600">
+					       <Edit className="mr-2 h-4 w-4" />
+					       Restore E-Book
+				       </DropdownMenuItem>
+			       )}
+			       {ebook.status === "draft" && (
+				       <DropdownMenuItem className="text-red-600 cursor-pointer focus:text-red-600">
+					       <Trash className="mr-2 h-4 w-4" />
+					       Delete E-Book
+				       </DropdownMenuItem>
+			       )}
 					</DropdownMenuContent>
 				</DropdownMenu>
 			);

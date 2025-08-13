@@ -155,11 +155,21 @@ const columns: import("@tanstack/react-table").ColumnDef<OnlineCourse, any>[] = 
 			<div className="font-mono text-sm bg-pink-100 px-2 py-1 rounded text-pink-700">{row.getValue("id")}</div>
 		),
 	},
-	{
-		accessorKey: "title",
-		header: "Title",
-		cell: ({ row }: { row: Row<OnlineCourse> }) => <div className="font-medium max-w-xs truncate">{row.getValue("title")}</div>,
-	},
+       {
+	       accessorKey: "title",
+	       header: "Title",
+	       cell: ({ row }: { row: Row<OnlineCourse> }) => {
+		       const course = row.original;
+		       return (
+			       <Link
+				       href={`/online-course/${course.id}`}
+				       className="font-medium max-w-xs truncate text-blue-600 hover:underline block"
+			       >
+				       {row.getValue("title")}
+			       </Link>
+		       );
+	       },
+       },
 	{
 		accessorKey: "instructor",
 		header: "Instructor",
@@ -223,17 +233,31 @@ const columns: import("@tanstack/react-table").ColumnDef<OnlineCourse, any>[] = 
 								View Course
 							</Link>
 						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<Link href={`/online-course/${course.id}/edit`} className="cursor-pointer">
-								<Edit className="mr-2 h-4 w-4 text-green-500" />
-								Edit Course
-							</Link>
-						</DropdownMenuItem>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem className="text-red-600 cursor-pointer focus:text-red-600">
-							<Trash className="mr-2 h-4 w-4" />
-							Delete Course
-						</DropdownMenuItem>
+			       <DropdownMenuItem asChild>
+				       <Link href={`/online-course/update/${course.id}`} className="cursor-pointer">
+					       <Edit className="mr-2 h-4 w-4 text-green-500" />
+					       Edit Course
+				       </Link>
+			       </DropdownMenuItem>
+			       <DropdownMenuSeparator />
+			       {course.status === "published" && (
+				       <DropdownMenuItem className="text-yellow-600 cursor-pointer focus:text-yellow-600">
+					       <Trash className="mr-2 h-4 w-4" />
+					       Archive Course
+				       </DropdownMenuItem>
+			       )}
+			       {course.status === "archived" && (
+				       <DropdownMenuItem className="text-green-600 cursor-pointer focus:text-green-600">
+					       <Edit className="mr-2 h-4 w-4" />
+					       Restore Course
+				       </DropdownMenuItem>
+			       )}
+			       {course.status === "draft" && (
+				       <DropdownMenuItem className="text-red-600 cursor-pointer focus:text-red-600">
+					       <Trash className="mr-2 h-4 w-4" />
+					       Delete Course
+				       </DropdownMenuItem>
+			       )}
 					</DropdownMenuContent>
 				</DropdownMenu>
 			);
