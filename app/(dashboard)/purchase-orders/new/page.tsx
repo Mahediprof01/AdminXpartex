@@ -13,9 +13,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Save } from "lucide-react";
 
 type PurchaseOrderForm = {
   id: string;
@@ -30,6 +30,7 @@ type PurchaseOrderForm = {
 
 export default function CreatePurchaseOrderPage() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -64,7 +65,7 @@ export default function CreatePurchaseOrderPage() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
+    <div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -87,120 +88,136 @@ export default function CreatePurchaseOrderPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {" "}
-          {/* Purchase ID */}
-          <div>
-            <Label>Purchase ID</Label>
-            <Input
-              {...register("id", { required: "Purchase ID is required" })}
-              placeholder="PO005"
-            />
-            {errors.id && (
-              <p className="text-red-500 text-sm">{errors.id.message}</p>
-            )}
-          </div>
-          {/* Vendor */}
-          <div>
-            <Label>Vendor</Label>
-            <Input
-              {...register("vendor", { required: "Vendor name is required" })}
-              placeholder="TechCorp Solutions"
-            />
-            {errors.vendor && (
-              <p className="text-red-500 text-sm">{errors.vendor.message}</p>
-            )}
-          </div>
+        <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {" "}
+              {/* Purchase ID */}
+              <div>
+                <Label>Purchase ID</Label>
+                <Input
+                  {...register("id", { required: "Purchase ID is required" })}
+                  placeholder="PO005"
+                />
+                {errors.id && (
+                  <p className="text-red-500 text-sm">{errors.id.message}</p>
+                )}
+              </div>
+              {/* Vendor */}
+              <div>
+                <Label>Vendor</Label>
+                <Input
+                  {...register("vendor", {
+                    required: "Vendor name is required",
+                  })}
+                  placeholder="TechCorp Solutions"
+                />
+                {errors.vendor && (
+                  <p className="text-red-500 text-sm">
+                    {errors.vendor.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Product */}
+            <div>
+              <Label>Product</Label>
+              <Input
+                {...register("product", {
+                  required: "Product name is required",
+                })}
+                placeholder="Wireless Headphones"
+              />
+              {errors.product && (
+                <p className="text-red-500 text-sm">{errors.product.message}</p>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Quantity */}
+              <div>
+                <Label>Quantity</Label>
+                <Input
+                  type="number"
+                  {...register("quantity", {
+                    valueAsNumber: true,
+                    required: true,
+                    min: 1,
+                  })}
+                />
+              </div>
+
+              {/* Unit Price */}
+              <div>
+                <Label>Unit Price (USD)</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  {...register("price", {
+                    valueAsNumber: true,
+                    required: true,
+                    min: 0,
+                  })}
+                />
+              </div>
+
+              {/* Total */}
+              <div>
+                <Label>Total (USD)</Label>
+                <Input
+                  type="number"
+                  {...register("total", { valueAsNumber: true })}
+                  readOnly
+                  className="bg-gray-100"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Date */}
+              <div>
+                <Label>Date</Label>
+                <Input type="date" {...register("date", { required: true })} />
+              </div>
+
+              {/* Status */}
+              <div>
+                <Label>Status</Label>
+                <Select
+                  onValueChange={(val) => setValue("status", val)}
+                  defaultValue="pending"
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="approved">Approved</SelectItem>
+                    <SelectItem value="delivered">Delivered</SelectItem>
+                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Submit */}
+            <div className="flex items-center justify-end gap-4 pt-4">
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-lg"
+              >
+                <Save className="mr-2 h-4 w-4" />
+                {isLoading ? "Creating..." : "Create Purchase Order"}
+              </Button>
+
+              <Button type="button" variant="outline" asChild>
+                <Link href="/purchase-orders">Cancel</Link>
+              </Button>
+            </div>
+          </form>
         </div>
-
-        {/* Product */}
-        <div>
-          <Label>Product</Label>
-          <Input
-            {...register("product", { required: "Product name is required" })}
-            placeholder="Wireless Headphones"
-          />
-          {errors.product && (
-            <p className="text-red-500 text-sm">{errors.product.message}</p>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Quantity */}
-          <div>
-            <Label>Quantity</Label>
-            <Input
-              type="number"
-              {...register("quantity", {
-                valueAsNumber: true,
-                required: true,
-                min: 1,
-              })}
-            />
-          </div>
-
-          {/* Unit Price */}
-          <div>
-            <Label>Unit Price (USD)</Label>
-            <Input
-              type="number"
-              step="0.01"
-              {...register("price", {
-                valueAsNumber: true,
-                required: true,
-                min: 0,
-              })}
-            />
-          </div>
-
-          {/* Total */}
-          <div>
-            <Label>Total (USD)</Label>
-            <Input
-              type="number"
-              {...register("total", { valueAsNumber: true })}
-              readOnly
-              className="bg-gray-100"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Date */}
-          <div>
-            <Label>Date</Label>
-            <Input type="date" {...register("date", { required: true })} />
-          </div>
-
-          {/* Status */}
-          <div>
-            <Label>Status</Label>
-            <Select
-              onValueChange={(val) => setValue("status", val)}
-              defaultValue="pending"
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="approved">Approved</SelectItem>
-                <SelectItem value="delivered">Delivered</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* Submit */}
-        <Button
-          type="submit"
-          className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
-        >
-          Create Purchase Order
-        </Button>
-        </form>
       </motion.div>
     </div>
   );
