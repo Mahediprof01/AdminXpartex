@@ -6,6 +6,7 @@ import {
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
+  type Row,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -50,6 +51,7 @@ interface DataTableProps<TData, TValue> {
     label: string;
     options: { label: string; value: string }[];
   }[];
+  rowClassName?: (row: Row<TData>) => string;
 }
 
 export function DataTable<TData, TValue>({
@@ -58,6 +60,7 @@ export function DataTable<TData, TValue>({
   searchKey = "name",
   searchPlaceholder = "Search...",
   filterOptions = [],
+  rowClassName,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -189,7 +192,9 @@ export function DataTable<TData, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
-                    className="hover:bg-gray-50 transition-colors"
+                    className={`${
+                      rowClassName ? rowClassName(row) : ""
+                    } hover:bg-gray-50 transition-colors`}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="min-w-0">
