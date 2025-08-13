@@ -1,7 +1,5 @@
 "use client";
 
-import type React from "react";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,11 +16,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useVendorStore } from "@/lib/store";
+import { useManufacturerStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
 
-export default function NewVendorPage() {
-  const { addVendor } = useVendorStore();
+export default function NewManufacturerPage() {
+  const { addManufacturer } = useManufacturerStore();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,9 +38,8 @@ export default function NewVendorPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
-      addVendor({
+      addManufacturer({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -52,10 +49,9 @@ export default function NewVendorPage() {
         address: formData.address,
         description: formData.description,
       });
-
-      router.push("/vendors");
+      router.push("/manufactures");
     } catch (error) {
-      console.error("Error adding vendor:", error);
+      console.error("Error adding manufacturer:", error);
     } finally {
       setIsLoading(false);
     }
@@ -74,35 +70,34 @@ export default function NewVendorPage() {
     >
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
-          <Link href="/vendors">
+          <Link href="/manufactures">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
         <div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-            Add New Vendor
+            Add New Manufacturer
           </h1>
           <p className="text-muted-foreground">
-            Create a new vendor partnership
+            Create a new manufacturer
           </p>
         </div>
       </div>
-
       <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
         <Card className="border-0 shadow-none max-w-full">
           <CardHeader>
-            <CardTitle>Vendor Information</CardTitle>
+            <CardTitle>Manufacturer Information</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Vendor Name *</Label>
+                  <Label htmlFor="name">Manufacturer Name *</Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleChange("name", e.target.value)}
-                    placeholder="Enter vendor name"
+                    placeholder="Enter manufacturer name"
                     required
                   />
                 </div>
@@ -113,12 +108,11 @@ export default function NewVendorPage() {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleChange("email", e.target.value)}
-                    placeholder="vendor@example.com"
+                    placeholder="manufacturer@example.com"
                     required
                   />
                 </div>
               </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone</Label>
@@ -145,28 +139,25 @@ export default function NewVendorPage() {
                   </Select>
                 </div>
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="address">Address</Label>
                 <Input
                   id="address"
                   value={formData.address}
                   onChange={(e) => handleChange("address", e.target.value)}
-                  placeholder="Enter vendor address"
+                  placeholder="Enter manufacturer address"
                 />
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
                   onChange={(e) => handleChange("description", e.target.value)}
-                  placeholder="Enter vendor description"
+                  placeholder="Enter manufacturer description"
                   rows={4}
                 />
               </div>
-
               <div className="flex items-center justify-end gap-4 pt-4">
                 <Button
                   type="submit"
@@ -174,10 +165,10 @@ export default function NewVendorPage() {
                   className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
                 >
                   <Save className="mr-2 h-4 w-4" />
-                  {isLoading ? "Creating..." : "Create Vendor"}
+                  {isLoading ? "Creating..." : "Create Manufacturer"}
                 </Button>
                 <Button type="button" variant="outline" asChild>
-                  <Link href="/vendors">Cancel</Link>
+                  <Link href="/manufactures">Cancel</Link>
                 </Button>
               </div>
             </form>
