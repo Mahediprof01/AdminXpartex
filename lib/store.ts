@@ -1,4 +1,54 @@
-"use client"
+// Manufacturer Types and Store
+export interface Manufacturer {
+  id: string
+  name: string
+  email: string
+  phone: string
+  status: "active" | "inactive"
+  products: number
+  revenue: number
+  address?: string
+  description?: string
+}
+
+interface ManufacturerStore {
+  manufacturers: Manufacturer[]
+  addManufacturer: (manufacturer: Omit<Manufacturer, "id">) => void
+  updateManufacturer: (id: string, manufacturer: Partial<Manufacturer>) => void
+  deleteManufacturer: (id: string) => void
+  getManufacturer: (id: string) => Manufacturer | undefined
+}
+
+const initialManufacturers: Manufacturer[] = [
+  {
+    id: "MANU001",
+    name: "Acme Manufacturing",
+    email: "info@acmemfg.com",
+    phone: "+1 (555) 111-2222",
+    status: "active",
+    products: 20,
+    revenue: 50000,
+    address: "789 Industrial Rd, Detroit, MI",
+    description: "Leading manufacturer of industrial equipment",
+  },
+]
+
+export const useManufacturerStore = create<ManufacturerStore>((set, get) => ({
+  manufacturers: initialManufacturers,
+  addManufacturer: (manufacturer) =>
+    set((state) => ({
+      manufacturers: [...state.manufacturers, { ...manufacturer, id: generateId("MANU") }],
+    })),
+  updateManufacturer: (id, manufacturer) =>
+    set((state) => ({
+      manufacturers: state.manufacturers.map((m) => (m.id === id ? { ...m, ...manufacturer } : m)),
+    })),
+  deleteManufacturer: (id) =>
+    set((state) => ({
+      manufacturers: state.manufacturers.filter((m) => m.id !== id),
+    })),
+  getManufacturer: (id) => get().manufacturers.find((m) => m.id === id),
+}))
 
 import { create } from "zustand"
 

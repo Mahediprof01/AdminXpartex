@@ -111,6 +111,14 @@ const menuModules = [
     ],
   },
   {
+    title: "LMS",
+    icon: FileText,
+    children: [
+      { title: "Online Course", url: "/online-course" },
+      { title: "E-book", url: "/e-book" },
+    ],
+  },
+  {
     title: "Customer Support",
     icon: UserCheck,
     children: [{ title: "Support Center", url: "/support" }],
