@@ -129,7 +129,7 @@ const columns: ColumnDef<Student>[] = [
     accessorKey: "id",
     header: "Student ID",
     cell: ({ row }) => (
-      <div className="font-mono text-sm bg-blue-100 px-2 py-1 rounded text-blue-700">
+      <div className="font-mono text-sm bg-green-100 px-2 py-1 rounded text-green-700">
         {row.getValue("id")}
       </div>
     ),
@@ -174,7 +174,7 @@ const columns: ColumnDef<Student>[] = [
     cell: ({ row }) => (
       <Badge
         variant="outline"
-        className="bg-blue-50 text-blue-700 border-blue-200"
+        className="bg-green-50 text-green-700 border-green-200"
       >
         {row.getValue("coursesEnrolled")} courses
       </Badge>
@@ -227,7 +227,7 @@ const columns: ColumnDef<Student>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link
-                href={`/students/${student.id}/edit`}
+                href={`/students/update/${student.id}`}
                 className="cursor-pointer"
               >
                 <Edit className="mr-2 h-4 w-4 text-green-500" />
@@ -258,7 +258,7 @@ export default function StudentsPage() {
         </div>
         <Button
           asChild
-          className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg"
+          className="bg-gradient-to-r from-green-600 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white shadow-lg"
         >
           <Link href="/students/new">
             <Plus className="mr-2 h-4 w-4" />
@@ -270,7 +270,7 @@ export default function StudentsPage() {
       {/* Data Table */}
       <div className="bg-white rounded-xl shadow-lg border-0 p-6">
         <div className="flex items-center gap-2 mb-4">
-          <UserCheck className="h-5 w-5 text-blue-500" />
+          <UserCheck className="h-5 w-5 text-green-500" />
           <h3 className="text-lg font-semibold"> All Students</h3>
           <Badge variant="secondary" className="ml-auto">
             {students.length} total
