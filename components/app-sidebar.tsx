@@ -99,16 +99,12 @@ const menuModules = [
   {
     title: "News Management",
     icon: FileText,
-    children: [
-      { title: "News", url: "/news" },
-    ],
+    children: [{ title: "News", url: "/news" }],
   },
   {
     title: "Freelancers Management",
     icon: UserCheck,
-    children: [
-      { title: "Freelancers", url: "/freelancers" },
-    ],
+    children: [{ title: "Freelancers", url: "/freelancers" }],
   },
   {
     title: "Learning Management",
@@ -218,17 +214,19 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r-0 min-w-[250px] max-w-[270px] w-[260px]">
       <SidebarHeader className="border-b border-sidebar-border">
-        <div className="flex items-center gap-3 px-4 py-3">
-          <div className="flex aspect-square size-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg">
-            <Store className="size-5" />
+        <Link href={"/dashboard"}>
+          <div className="flex items-center gap-3 px-4 py-3">
+            <div className="flex aspect-square size-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg">
+              <Store className="size-5" />
+            </div>
+            <div className="flex flex-col gap-0.5 leading-none">
+              <span className="font-bold text-lg bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Xpartex
+              </span>
+              <span className="text-xs text-muted-foreground">Admin Panel</span>
+            </div>
           </div>
-          <div className="flex flex-col gap-0.5 leading-none">
-            <span className="font-bold text-lg bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Xpartex
-            </span>
-            <span className="text-xs text-muted-foreground">Admin Panel</span>
-          </div>
-        </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent className="px-2 flex flex-col h-full">
         <SidebarGroup className="flex-1">
