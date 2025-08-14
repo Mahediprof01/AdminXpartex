@@ -44,7 +44,7 @@ export default function ProductDetailPage({
           <p className="text-muted-foreground">Product ID: {product.id}</p>
         </div>
         <Button asChild className="whitespace-nowrap">
-          <Link href={`/product-wholesale/${product.id}/edit`}>
+          <Link href={`/product-wholesale/update/${product.id}`}>
             <Edit className="mr-2 h-4 w-4" />
             Edit Product
           </Link>

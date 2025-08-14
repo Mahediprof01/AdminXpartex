@@ -204,7 +204,7 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link
-                href={`/return-wholesale/${order.id}/edit`}
+                href={`/return-wholesale/update/${order.id}`}
                 className="cursor-pointer"
               >
                 <Edit className="mr-2 h-4 w-4 text-green-500" />

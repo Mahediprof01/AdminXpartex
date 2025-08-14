@@ -101,14 +101,19 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
     accessorKey: "customer",
     header: "Customer",
     cell: ({ row }) => (
-      <span className="font-medium block max-w-[150px] truncate">{row.getValue("customer")}</span>
+      <span className="font-medium block max-w-[150px] truncate">
+        {row.getValue("customer")}
+      </span>
     ),
   },
   {
     accessorKey: "partner",
     header: "Partner",
     cell: ({ row }) => (
-      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 whitespace-nowrap">
+      <Badge
+        variant="outline"
+        className="bg-blue-50 text-blue-700 border-blue-200 whitespace-nowrap"
+      >
         {row.getValue("partner")}
       </Badge>
     ),
@@ -129,7 +134,11 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
       return (
         <Badge
           variant={status === "Delivered" ? "default" : "secondary"}
-          className={status === "Delivered" ? "bg-green-100 text-green-700 hover:bg-green-200" : ""}
+          className={
+            status === "Delivered"
+              ? "bg-green-100 text-green-700 hover:bg-green-200"
+              : ""
+          }
         >
           {String(status)}
         </Badge>
@@ -140,7 +149,9 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
     accessorKey: "transactionId",
     header: "Transaction ID",
     cell: ({ row }) => (
-      <span className="font-mono text-xs bg-gray-50 px-2 py-1 rounded max-w-[100px] truncate">{row.getValue("transactionId")}</span>
+      <span className="font-mono text-xs bg-gray-50 px-2 py-1 rounded max-w-[100px] truncate">
+        {row.getValue("transactionId")}
+      </span>
     ),
   },
   {
@@ -167,13 +178,19 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Link href={`/logistics-retail/${order.id}`} className="cursor-pointer">
+              <Link
+                href={`/logistics-retail/${order.id}`}
+                className="cursor-pointer"
+              >
                 <Eye className="mr-2 h-4 w-4 text-blue-500" />
                 View Details
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/logistics-retail/${order.id}/edit`} className="cursor-pointer">
+              <Link
+                href={`/logistics-retail/update/${order.id}`}
+                className="cursor-pointer"
+              >
                 <Edit className="mr-2 h-4 w-4 text-green-500" />
                 Edit Order
               </Link>
@@ -200,9 +217,7 @@ export default function LogisticsRetailPage() {
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
-            
-          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent"></h2>
           <p className="text-muted-foreground mt-1"></p>
         </div>
         <Button

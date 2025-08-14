@@ -191,14 +191,17 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Link href={`/orders-retail/${order.id}`} className="cursor-pointer">
+              <Link
+                href={`/orders-retail/${order.id}`}
+                className="cursor-pointer"
+              >
                 <Eye className="mr-2 h-4 w-4 text-blue-500" />
                 View Details
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link
-                href={`/orders-retail/${order.id}/edit`}
+                href={`/orders-retail/update/${order.id}`}
                 className="cursor-pointer"
               >
                 <Edit className="mr-2 h-4 w-4 text-green-500" />
@@ -230,7 +233,9 @@ export default function OrdersRetailPage() {
           <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-pink-600 to-orange-600 bg-clip-text text-transparent">
             Retail Orders
           </h2>
-          <p className="text-muted-foreground mt-1">All retail orders in the system.</p>
+          <p className="text-muted-foreground mt-1">
+            All retail orders in the system.
+          </p>
         </div>
         <Button
           asChild

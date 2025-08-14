@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 // Filter options for DataTable
 const filterOptions = [
@@ -15,7 +15,10 @@ const filterOptions = [
     key: "skills",
     label: "Skills",
     options: [
-      { label: "React, Node.js, TypeScript", value: "React, Node.js, TypeScript" },
+      {
+        label: "React, Node.js, TypeScript",
+        value: "React, Node.js, TypeScript",
+      },
       { label: "UI/UX Design, Figma", value: "UI/UX Design, Figma" },
       { label: "Python, Django, AWS", value: "Python, Django, AWS" },
       { label: "Content Writing, SEO", value: "Content Writing, SEO" },
@@ -43,12 +46,19 @@ const filterOptions = [
   },
 ];
 
-import type { Row, Table, Column } from "@tanstack/react-table"
-import type { Freelancer } from "@/lib/store"
-import { Button } from "@/components/ui/button"
-import { DataTable } from "@/components/data-table"
-import { Badge } from "@/components/ui/badge"
-import { MoreHorizontal, Plus, Eye, Edit, Trash, UserCheck } from "lucide-react"
+import type { Row, Table, Column } from "@tanstack/react-table";
+import type { Freelancer } from "@/lib/store";
+import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/data-table";
+import { Badge } from "@/components/ui/badge";
+import {
+  MoreHorizontal,
+  Plus,
+  Eye,
+  Edit,
+  Trash,
+  UserCheck,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -56,9 +66,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Link from "next/link"
-import { motion } from "framer-motion"
+} from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 const freelancers = [
   {
@@ -105,20 +115,20 @@ const freelancers = [
     hourlyRate: 45,
     joinedDate: "2024-01-12",
   },
-]
+];
 
 const getStatusColor = (status: string) => {
   switch (status) {
     case "available":
-      return "bg-green-100 text-green-700 border-green-200"
+      return "bg-green-100 text-green-700 border-green-200";
     case "busy":
-      return "bg-yellow-100 text-yellow-700 border-yellow-200"
+      return "bg-yellow-100 text-yellow-700 border-yellow-200";
     case "inactive":
-      return "bg-gray-100 text-gray-700 border-gray-200"
+      return "bg-gray-100 text-gray-700 border-gray-200";
     default:
-      return "bg-gray-100 text-gray-700 border-gray-200"
+      return "bg-gray-100 text-gray-700 border-gray-200";
   }
-}
+};
 
 const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
   {
@@ -148,29 +158,39 @@ const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
   {
     accessorKey: "id",
     header: "Freelancer ID",
-  cell: ({ row }: { row: Row<Freelancer> }) => (
-      <div className="font-mono text-sm bg-teal-100 px-2 py-1 rounded text-teal-700">{row.getValue("id")}</div>
+    cell: ({ row }: { row: Row<Freelancer> }) => (
+      <div className="font-mono text-sm bg-teal-100 px-2 py-1 rounded text-teal-700">
+        {row.getValue("id")}
+      </div>
     ),
   },
   {
     accessorKey: "name",
     header: "Name",
-  cell: ({ row }: { row: Row<Freelancer> }) => <div className="font-medium">{row.getValue("name")}</div>,
+    cell: ({ row }: { row: Row<Freelancer> }) => (
+      <div className="font-medium">{row.getValue("name")}</div>
+    ),
   },
   {
     accessorKey: "email",
     header: "Email",
-  cell: ({ row }: { row: Row<Freelancer> }) => <div className="text-sm text-muted-foreground">{row.getValue("email")}</div>,
+    cell: ({ row }: { row: Row<Freelancer> }) => (
+      <div className="text-sm text-muted-foreground">
+        {row.getValue("email")}
+      </div>
+    ),
   },
   {
     accessorKey: "skills",
     header: "Skills",
-  cell: ({ row }: { row: Row<Freelancer> }) => <div className="text-sm max-w-xs truncate">{row.getValue("skills")}</div>,
+    cell: ({ row }: { row: Row<Freelancer> }) => (
+      <div className="text-sm max-w-xs truncate">{row.getValue("skills")}</div>
+    ),
   },
   {
     accessorKey: "rating",
     header: "Rating",
-  cell: ({ row }: { row: Row<Freelancer> }) => (
+    cell: ({ row }: { row: Row<Freelancer> }) => (
       <div className="flex items-center gap-1">
         <span className="text-yellow-500">★</span>
         <span className="font-medium">{row.getValue("rating")}</span>
@@ -180,8 +200,11 @@ const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
   {
     accessorKey: "projects",
     header: "Projects",
-  cell: ({ row }: { row: Row<Freelancer> }) => (
-      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+    cell: ({ row }: { row: Row<Freelancer> }) => (
+      <Badge
+        variant="outline"
+        className="bg-blue-50 text-blue-700 border-blue-200"
+      >
         {row.getValue("projects")} completed
       </Badge>
     ),
@@ -189,24 +212,28 @@ const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
   {
     accessorKey: "hourlyRate",
     header: "Rate",
-  cell: ({ row }: { row: Row<Freelancer> }) => <div className="font-semibold text-green-600">${row.getValue("hourlyRate")}/hr</div>,
+    cell: ({ row }: { row: Row<Freelancer> }) => (
+      <div className="font-semibold text-green-600">
+        ${row.getValue("hourlyRate")}/hr
+      </div>
+    ),
   },
   {
     accessorKey: "status",
     header: "Status",
-  cell: ({ row }: { row: Row<Freelancer> }) => {
-      const status = row.getValue("status") as string
+    cell: ({ row }: { row: Row<Freelancer> }) => {
+      const status = row.getValue("status") as string;
       return (
         <Badge variant="outline" className={getStatusColor(status)}>
           {status}
         </Badge>
-      )
+      );
     },
   },
   {
     id: "actions",
-  cell: ({ row }: { row: Row<Freelancer> }) => {
-      const freelancer = row.original
+    cell: ({ row }: { row: Row<Freelancer> }) => {
+      const freelancer = row.original;
 
       return (
         <DropdownMenu>
@@ -219,13 +246,19 @@ const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Link href={`/freelancers/${freelancer.id}`} className="cursor-pointer">
+              <Link
+                href={`/freelancers/${freelancer.id}`}
+                className="cursor-pointer"
+              >
                 <Eye className="mr-2 h-4 w-4 text-blue-500" />
                 View Profile
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/freelancers/${freelancer.id}/edit`} className="cursor-pointer">
+              <Link
+                href={`/freelancers/update/${freelancer.id}`}
+                className="cursor-pointer"
+              >
                 <Edit className="mr-2 h-4 w-4 text-green-500" />
                 Edit Profile
               </Link>
@@ -237,10 +270,10 @@ const columns: import("@tanstack/react-table").ColumnDef<Freelancer, any>[] = [
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     },
   },
-]
+];
 
 export default function FreelancersPage() {
   return (
@@ -252,9 +285,7 @@ export default function FreelancersPage() {
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-            
-          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"></h2>
           <p className="text-muted-foreground mt-1"> </p>
         </div>
         <Button
@@ -273,13 +304,23 @@ export default function FreelancersPage() {
           <UserCheck className="h-5 w-5 text-green-500" />
           <h3 className="text-lg font-semibold flex items-center gap-2">
             All Freelancers
-            <span className="ml-2 text-sm text-gray-500">(
-              <span className="font-semibold text-green-600">{freelancers.length}</span> freelancers
-            )</span>
+            <span className="ml-2 text-sm text-gray-500">
+              (
+              <span className="font-semibold text-green-600">
+                {freelancers.length}
+              </span>{" "}
+              freelancers )
+            </span>
           </h3>
         </div>
-        <DataTable columns={columns} data={freelancers as Freelancer[]} searchKey="name" searchPlaceholder="Search freelancers..." filterOptions={filterOptions} />
+        <DataTable
+          columns={columns}
+          data={freelancers as Freelancer[]}
+          searchKey="name"
+          searchPlaceholder="Search freelancers..."
+          filterOptions={filterOptions}
+        />
       </div>
     </motion.div>
-  )
+  );
 }
