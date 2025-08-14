@@ -222,13 +222,13 @@ const columns: import("@tanstack/react-table").ColumnDef<Blog, any>[] = [
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Link href={`/blogs/${blog.id}`} className="cursor-pointer">
+              <Link href={`/news/${blog.id}`} className="cursor-pointer">
                 <Eye className="mr-2 h-4 w-4 text-blue-500" />
                 View Post
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/blogs/${blog.id}/edit`} className="cursor-pointer">
+              <Link href={`/news/update/${blog.id}`} className="cursor-pointer">
                 <Edit className="mr-2 h-4 w-4 text-green-500" />
                 Edit Post
               </Link>

@@ -3,7 +3,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Edit, Factory, Mail, Phone, MapPin, DollarSign } from "lucide-react";
+import {
+  ArrowLeft,
+  Edit,
+  Factory,
+  Mail,
+  Phone,
+  MapPin,
+  DollarSign,
+} from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useManufacturerStore } from "@/lib/store";
@@ -11,8 +19,11 @@ import { useManufacturerStore } from "@/lib/store";
 import { notFound } from "next/navigation";
 import * as React from "react";
 
-
-export default function ManufacturerDetailPage({ params }: { params: { id: string } }) {
+export default function ManufacturerDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { getManufacturer } = useManufacturerStore();
   // Next.js 14+ compatibility: use React.use() if params is a promise, otherwise use directly
   let id: string;
@@ -46,11 +57,15 @@ export default function ManufacturerDetailPage({ params }: { params: { id: strin
           </Link>
         </Button>
         <div className="flex-1 min-w-0">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight truncate">{manufacturer.name}</h1>
-          <p className="text-muted-foreground">Manufacturer ID: {manufacturer.id}</p>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight truncate">
+            {manufacturer.name}
+          </h1>
+          <p className="text-muted-foreground">
+            Manufacturer ID: {manufacturer.id}
+          </p>
         </div>
         <Button asChild className="whitespace-nowrap">
-          <Link href={`/manufactures/${manufacturer.id}/edit`}>
+          <Link href={`/manufactures/update/${manufacturer.id}`}>
             <Edit className="mr-2 h-4 w-4" />
             Edit Manufacturer
           </Link>
@@ -69,14 +84,18 @@ export default function ManufacturerDetailPage({ params }: { params: { id: strin
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-muted-foreground" />
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Email</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Email
+                  </p>
                   <p className="text-sm">{manufacturer.email}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-muted-foreground" />
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Phone</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Phone
+                  </p>
                   <p className="text-sm">{manufacturer.phone}</p>
                 </div>
               </div>
@@ -84,7 +103,9 @@ export default function ManufacturerDetailPage({ params }: { params: { id: strin
                 <div className="flex items-start gap-3">
                   <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Address</p>
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Address
+                    </p>
                     <p className="text-sm">{manufacturer.address}</p>
                   </div>
                 </div>
@@ -99,7 +120,9 @@ export default function ManufacturerDetailPage({ params }: { params: { id: strin
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-4 bg-blue-50 rounded-lg">
-                <p className="text-2xl font-bold text-blue-600">{manufacturer.products}</p>
+                <p className="text-2xl font-bold text-blue-600">
+                  {manufacturer.products}
+                </p>
                 <p className="text-sm text-muted-foreground">Products</p>
               </div>
               <div className="text-center p-4 bg-green-50 rounded-lg">
@@ -111,10 +134,18 @@ export default function ManufacturerDetailPage({ params }: { params: { id: strin
               </div>
             </div>
             <div>
-              <p className="text-sm font-medium text-muted-foreground">Status</p>
+              <p className="text-sm font-medium text-muted-foreground">
+                Status
+              </p>
               <Badge
-                variant={manufacturer.status === "active" ? "default" : "secondary"}
-                className={manufacturer.status === "active" ? "bg-green-100 text-green-700" : ""}
+                variant={
+                  manufacturer.status === "active" ? "default" : "secondary"
+                }
+                className={
+                  manufacturer.status === "active"
+                    ? "bg-green-100 text-green-700"
+                    : ""
+                }
               >
                 {manufacturer.status}
               </Badge>
@@ -128,7 +159,9 @@ export default function ManufacturerDetailPage({ params }: { params: { id: strin
             <CardTitle>Description</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">{manufacturer.description}</p>
+            <p className="text-sm text-muted-foreground">
+              {manufacturer.description}
+            </p>
           </CardContent>
         </Card>
       )}

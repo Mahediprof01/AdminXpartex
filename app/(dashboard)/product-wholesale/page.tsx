@@ -202,7 +202,7 @@ export default function ProductsPage() {
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
-                  href={`/product-wholesale/${product.id}/edit`}
+                  href={`/product-wholesale/update/${product.id}`}
                   className="cursor-pointer"
                 >
                   <Edit className="mr-2 h-4 w-4 text-green-500" />

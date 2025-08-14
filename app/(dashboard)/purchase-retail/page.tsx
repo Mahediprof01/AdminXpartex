@@ -232,7 +232,7 @@ const columns: import("@tanstack/react-table").ColumnDef<any, any>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link
-                href={`/purchase-retail/${order.id}/edit`}
+                href={`/purchase-retail/update/${order.id}`}
                 className="cursor-pointer"
               >
                 <Edit className="mr-2 h-4 w-4 text-green-500" />

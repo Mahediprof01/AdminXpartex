@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import type { Row, Table, Column } from "@tanstack/react-table"
-import type { Manufacturer } from "@/lib/store"
-import { Button } from "@/components/ui/button"
-import { DataTable } from "@/components/data-table"
-import { Badge } from "@/components/ui/badge"
-import { MoreHorizontal, Plus, Eye, Edit, Trash, Factory } from "lucide-react"
+import type { Row, Table, Column } from "@tanstack/react-table";
+import type { Manufacturer } from "@/lib/store";
+import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/data-table";
+import { Badge } from "@/components/ui/badge";
+import { MoreHorizontal, Plus, Eye, Edit, Trash, Factory } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,19 +13,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { useManufacturerStore } from "@/lib/store"
+} from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useManufacturerStore } from "@/lib/store";
 
 export default function ManufacturesPage() {
-  const { manufacturers, deleteManufacturer } = useManufacturerStore()
+  const { manufacturers, deleteManufacturer } = useManufacturerStore();
 
   const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this manufacturer?")) {
-      deleteManufacturer(id)
+      deleteManufacturer(id);
     }
-  }
+  };
 
   const filterOptions = [
     {
@@ -36,9 +36,12 @@ export default function ManufacturesPage() {
         { label: "Inactive", value: "inactive" },
       ],
     },
-  ]
+  ];
 
-  const columns: import("@tanstack/react-table").ColumnDef<Manufacturer, any>[] = [
+  const columns: import("@tanstack/react-table").ColumnDef<
+    Manufacturer,
+    any
+  >[] = [
     {
       id: "select",
       header: ({ table }: { table: Table<Manufacturer> }) => (
@@ -75,7 +78,12 @@ export default function ManufacturesPage() {
     {
       accessorKey: "name",
       header: ({ column }: { column: Column<Manufacturer, unknown> }) => (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Name</Button>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+        </Button>
       ),
       cell: ({ row }: { row: Row<Manufacturer> }) => (
         <Link
@@ -104,7 +112,9 @@ export default function ManufacturesPage() {
       accessorKey: "products",
       header: "Products",
       cell: ({ row }) => (
-        <span className="font-semibold text-purple-700 whitespace-nowrap">{row.getValue("products")}</span>
+        <span className="font-semibold text-purple-700 whitespace-nowrap">
+          {row.getValue("products")}
+        </span>
       ),
     },
     {
@@ -116,7 +126,11 @@ export default function ManufacturesPage() {
           style: "currency",
           currency: "USD",
         }).format(revenue);
-        return <div className="font-semibold text-green-600 whitespace-nowrap">{formatted}</div>;
+        return (
+          <div className="font-semibold text-green-600 whitespace-nowrap">
+            {formatted}
+          </div>
+        );
       },
     },
     {
@@ -127,7 +141,11 @@ export default function ManufacturesPage() {
         return (
           <Badge
             variant={status === "active" ? "default" : "secondary"}
-            className={status === "active" ? "bg-green-100 text-green-700 hover:bg-green-200" : ""}
+            className={
+              status === "active"
+                ? "bg-green-100 text-green-700 hover:bg-green-200"
+                : ""
+            }
           >
             {String(status)}
           </Badge>
@@ -141,7 +159,10 @@ export default function ManufacturesPage() {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-purple-100">
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0 hover:bg-purple-100"
+              >
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
@@ -149,13 +170,19 @@ export default function ManufacturesPage() {
             <DropdownMenuContent align="end" className="w-48">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem asChild>
-                <Link href={`/manufactures/${manufacturer.id}`} className="cursor-pointer">
+                <Link
+                  href={`/manufactures/${manufacturer.id}`}
+                  className="cursor-pointer"
+                >
                   <Eye className="mr-2 h-4 w-4 text-blue-500" />
                   View Details
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/manufactures/${manufacturer.id}/edit`} className="cursor-pointer">
+                <Link
+                  href={`/manufactures/update/${manufacturer.id}`}
+                  className="cursor-pointer"
+                >
                   <Edit className="mr-2 h-4 w-4 text-green-500" />
                   Edit
                 </Link>
@@ -174,7 +201,6 @@ export default function ManufacturesPage() {
       },
     },
   ];
-    
 
   return (
     <motion.div
@@ -185,9 +211,7 @@ export default function ManufacturesPage() {
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-            
-          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"></h2>
           <p className="text-muted-foreground mt-1"></p>
         </div>
         <Button
@@ -218,5 +242,5 @@ export default function ManufacturesPage() {
         />
       </div>
     </motion.div>
-  )
+  );
 }

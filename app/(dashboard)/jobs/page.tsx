@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 // Filter options for DataTable
 const filterOptions = [
@@ -42,12 +42,19 @@ const filterOptions = [
   },
 ];
 
-import type { Row, Table, Column } from "@tanstack/react-table"
-import type { Job } from "@/lib/store"
-import { Button } from "@/components/ui/button"
-import { DataTable } from "@/components/data-table"
-import { Badge } from "@/components/ui/badge"
-import { MoreHorizontal, Plus, Eye, Edit, Trash, Briefcase } from "lucide-react"
+import type { Row, Table, Column } from "@tanstack/react-table";
+import type { Job } from "@/lib/store";
+import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/data-table";
+import { Badge } from "@/components/ui/badge";
+import {
+  MoreHorizontal,
+  Plus,
+  Eye,
+  Edit,
+  Trash,
+  Briefcase,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,9 +62,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Link from "next/link"
-import { motion } from "framer-motion"
+} from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 const jobs = [
   {
@@ -104,33 +111,33 @@ const jobs = [
     applicants: 34,
     postedDate: "2024-01-12",
   },
-]
+];
 
 const getStatusColor = (status: string) => {
   switch (status) {
     case "active":
-      return "bg-green-100 text-green-700 border-green-200"
+      return "bg-green-100 text-green-700 border-green-200";
     case "closed":
-      return "bg-red-100 text-red-700 border-red-200"
+      return "bg-red-100 text-red-700 border-red-200";
     case "draft":
-      return "bg-yellow-100 text-yellow-700 border-yellow-200"
+      return "bg-yellow-100 text-yellow-700 border-yellow-200";
     default:
-      return "bg-gray-100 text-gray-700 border-gray-200"
+      return "bg-gray-100 text-gray-700 border-gray-200";
   }
-}
+};
 
 const getTypeColor = (type: string) => {
   switch (type) {
     case "Full-time":
-      return "bg-blue-100 text-blue-700 border-blue-200"
+      return "bg-blue-100 text-blue-700 border-blue-200";
     case "Part-time":
-      return "bg-purple-100 text-purple-700 border-purple-200"
+      return "bg-purple-100 text-purple-700 border-purple-200";
     case "Contract":
-      return "bg-orange-100 text-orange-700 border-orange-200"
+      return "bg-orange-100 text-orange-700 border-orange-200";
     default:
-      return "bg-gray-100 text-gray-700 border-gray-200"
+      return "bg-gray-100 text-gray-700 border-gray-200";
   }
-}
+};
 
 const columns: import("@tanstack/react-table").ColumnDef<Job, any>[] = [
   {
@@ -161,46 +168,63 @@ const columns: import("@tanstack/react-table").ColumnDef<Job, any>[] = [
     accessorKey: "id",
     header: "Job ID",
     cell: ({ row }) => (
-      <div className="font-mono text-sm bg-indigo-100 px-2 py-1 rounded text-indigo-700">{row.getValue("id")}</div>
+      <div className="font-mono text-sm bg-indigo-100 px-2 py-1 rounded text-indigo-700">
+        {row.getValue("id")}
+      </div>
     ),
   },
   {
     accessorKey: "title",
     header: "Job Title",
-  cell: ({ row }: { row: Row<Job> }) => <div className="font-medium">{row.getValue("title")}</div>,
+    cell: ({ row }: { row: Row<Job> }) => (
+      <div className="font-medium">{row.getValue("title")}</div>
+    ),
   },
   {
     accessorKey: "company",
     header: "Company",
-  cell: ({ row }: { row: Row<Job> }) => <div className="text-sm">{row.getValue("company")}</div>,
+    cell: ({ row }: { row: Row<Job> }) => (
+      <div className="text-sm">{row.getValue("company")}</div>
+    ),
   },
   {
     accessorKey: "location",
     header: "Location",
-  cell: ({ row }: { row: Row<Job> }) => <div className="text-sm text-muted-foreground">{row.getValue("location")}</div>,
+    cell: ({ row }: { row: Row<Job> }) => (
+      <div className="text-sm text-muted-foreground">
+        {row.getValue("location")}
+      </div>
+    ),
   },
   {
     accessorKey: "type",
     header: "Type",
-  cell: ({ row }: { row: Row<Job> }) => {
-      const type = row.getValue("type") as string
+    cell: ({ row }: { row: Row<Job> }) => {
+      const type = row.getValue("type") as string;
       return (
         <Badge variant="outline" className={getTypeColor(type)}>
           {type}
         </Badge>
-      )
+      );
     },
   },
   {
     accessorKey: "salary",
     header: "Salary",
-  cell: ({ row }: { row: Row<Job> }) => <div className="font-semibold text-green-600">{row.getValue("salary")}</div>,
+    cell: ({ row }: { row: Row<Job> }) => (
+      <div className="font-semibold text-green-600">
+        {row.getValue("salary")}
+      </div>
+    ),
   },
   {
     accessorKey: "applicants",
     header: "Applicants",
-  cell: ({ row }: { row: Row<Job> }) => (
-      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+    cell: ({ row }: { row: Row<Job> }) => (
+      <Badge
+        variant="outline"
+        className="bg-blue-50 text-blue-700 border-blue-200"
+      >
         {row.getValue("applicants")} applied
       </Badge>
     ),
@@ -208,19 +232,19 @@ const columns: import("@tanstack/react-table").ColumnDef<Job, any>[] = [
   {
     accessorKey: "status",
     header: "Status",
-  cell: ({ row }: { row: Row<Job> }) => {
-      const status = row.getValue("status") as string
+    cell: ({ row }: { row: Row<Job> }) => {
+      const status = row.getValue("status") as string;
       return (
         <Badge variant="outline" className={getStatusColor(status)}>
           {status}
         </Badge>
-      )
+      );
     },
   },
   {
     id: "actions",
-  cell: ({ row }: { row: Row<Job> }) => {
-      const job = row.original
+    cell: ({ row }: { row: Row<Job> }) => {
+      const job = row.original;
 
       return (
         <DropdownMenu>
@@ -239,7 +263,7 @@ const columns: import("@tanstack/react-table").ColumnDef<Job, any>[] = [
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/jobs/${job.id}/edit`} className="cursor-pointer">
+              <Link href={`/jobs/update/${job.id}`} className="cursor-pointer">
                 <Edit className="mr-2 h-4 w-4 text-green-500" />
                 Edit Job
               </Link>
@@ -251,10 +275,10 @@ const columns: import("@tanstack/react-table").ColumnDef<Job, any>[] = [
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     },
   },
-]
+];
 
 export default function JobsPage() {
   return (
@@ -266,9 +290,7 @@ export default function JobsPage() {
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            
-          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"></h2>
           <p className="text-muted-foreground mt-1"> </p>
         </div>
         <Button
@@ -287,13 +309,23 @@ export default function JobsPage() {
           <Briefcase className="h-5 w-5 text-indigo-500" />
           <h3 className="text-lg font-semibold flex items-center gap-2">
             All Job Postings
-            <span className="ml-2 text-sm text-gray-500">(
-              <span className="font-semibold text-indigo-600">{jobs.length}</span> jobs
-            )</span>
+            <span className="ml-2 text-sm text-gray-500">
+              (
+              <span className="font-semibold text-indigo-600">
+                {jobs.length}
+              </span>{" "}
+              jobs )
+            </span>
           </h3>
         </div>
-        <DataTable columns={columns} data={jobs as Job[]} searchKey="title" searchPlaceholder="Search jobs..." filterOptions={filterOptions} />
+        <DataTable
+          columns={columns}
+          data={jobs as Job[]}
+          searchKey="title"
+          searchPlaceholder="Search jobs..."
+          filterOptions={filterOptions}
+        />
       </div>
     </motion.div>
-  )
+  );
 }

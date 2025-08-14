@@ -52,7 +52,7 @@ export default function VendorDetailPage({
           <p className="text-muted-foreground">Supplier ID: {vendor.id}</p>
         </div>
         <Button asChild className="whitespace-nowrap">
-          <Link href={`/vendors/${vendor.id}/edit`}>
+          <Link href={`/supplier-wholesale/update/${vendor.id}`}>
             <Edit className="mr-2 h-4 w-4" />
             Edit Supplier
           </Link>

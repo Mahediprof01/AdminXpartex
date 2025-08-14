@@ -179,7 +179,7 @@ export default function SuppliersBusinessPage() {
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
-                  href={`/supplier-wholesale/${vendor.id}/edit`}
+                  href={`/supplier-wholesale/update/${vendor.id}`}
                   className="cursor-pointer"
                 >
                   <Edit className="mr-2 h-4 w-4 text-green-500" />
