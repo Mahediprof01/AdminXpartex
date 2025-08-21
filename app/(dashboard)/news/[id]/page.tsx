@@ -86,7 +86,7 @@ export default function BlogDetailPage({
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
-          <Link href="/blogs">
+          <Link href="/news">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>

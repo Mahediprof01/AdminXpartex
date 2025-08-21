@@ -234,12 +234,8 @@ export default function OrdersWholesalePage() {
     >
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-            Wholesale Orders
-          </h2>
-          <p className="text-muted-foreground mt-1">
-            All wholesale orders in the system.
-          </p>
+          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent"></h2>
+          <p className="text-muted-foreground mt-1"></p>
         </div>
         <Button
           asChild

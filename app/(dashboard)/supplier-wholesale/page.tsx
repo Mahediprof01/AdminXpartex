@@ -12,6 +12,9 @@ import {
   Edit,
   Trash,
   Building2,
+  CheckCircle,
+  AlertTriangle,
+  Mail,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -24,6 +27,7 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useVendorStore } from "@/lib/store";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function SuppliersBusinessPage() {
   const { vendors, deleteVendor } = useVendorStore();
@@ -208,20 +212,88 @@ export default function SuppliersBusinessPage() {
       transition={{ duration: 0.3 }}
       className="space-y-6 p-4 md:p-6"
     >
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"></h2>
-          <p className="text-muted-foreground mt-1"></p>
+      <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          {/* Total Suppliers */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Total Suppliers
+              </CardTitle>
+              <div className="bg-indigo-100 text-indigo-600 p-3 rounded-lg">
+                <Building2 className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">100</p>
+              <p className="text-xs text-gray-500">All wholesale suppliers</p>
+            </CardContent>
+          </Card>
+
+          {/* Active Suppliers */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Active Suppliers
+              </CardTitle>
+              <div className="bg-green-100 text-green-600 p-3 rounded-lg">
+                <CheckCircle className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">78</p>
+              <p className="text-xs text-gray-500">Currently active</p>
+            </CardContent>
+          </Card>
+
+          {/* Inactive Suppliers */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Inactive Suppliers
+              </CardTitle>
+              <div className="bg-red-100 text-red-600 p-3 rounded-lg">
+                <AlertTriangle className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">28</p>
+              <p className="text-xs text-gray-500">Currently inactive</p>
+            </CardContent>
+          </Card>
+
+          {/* Suppliers with Email */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Contactable
+              </CardTitle>
+              <div className="bg-blue-100 text-blue-600 p-3 rounded-lg">
+                <Mail className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">32</p>
+              <p className="text-xs text-gray-500">Suppliers with email</p>
+            </CardContent>
+          </Card>
         </div>
-        <Button
-          asChild
-          className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-lg whitespace-nowrap"
-        >
-          <Link href="/supplier-wholesale/new">
-            <Plus className="mr-2 h-4 w-4" />
-            Add Wholesale Supplier
-          </Link>
-        </Button>
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"></h2>
+            <p className="text-muted-foreground mt-1"></p>
+          </div>
+          <Button
+            asChild
+            className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-lg whitespace-nowrap"
+          >
+            <Link href="/supplier-wholesale/new">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Wholesale Supplier
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">

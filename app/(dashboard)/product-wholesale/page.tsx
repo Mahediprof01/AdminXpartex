@@ -5,7 +5,16 @@ import type { Product } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal, Plus, Eye, Edit, Trash, Package } from "lucide-react";
+import {
+  MoreHorizontal,
+  Plus,
+  Eye,
+  Edit,
+  Trash,
+  Package,
+  CheckCircle,
+  AlertTriangle,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +26,7 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useProductStore } from "@/lib/store";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ProductsPage() {
   const { products, deleteProduct } = useProductStore();
@@ -231,20 +241,90 @@ export default function ProductsPage() {
       transition={{ duration: 0.3 }}
       className="space-y-6 p-4 md:p-6"
     >
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"></h2>
-          <p className="text-muted-foreground mt-1"></p>
+      <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          {/* Total Products */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Total Products
+              </CardTitle>
+              <div className="bg-indigo-100 text-indigo-600 p-3 rounded-lg">
+                <Package className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">100</p>
+              <p className="text-xs text-gray-500">All wholesale products</p>
+            </CardContent>
+          </Card>
+
+          {/* Total Stock */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Total Stock
+              </CardTitle>
+              <div className="bg-green-100 text-green-600 p-3 rounded-lg">
+                <Package className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">52 units</p>
+              <p className="text-xs text-gray-500">All available stock</p>
+            </CardContent>
+          </Card>
+
+          {/* Active Products */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Active Products
+              </CardTitle>
+              <div className="bg-blue-100 text-blue-600 p-3 rounded-lg">
+                <CheckCircle className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">22</p>
+              <p className="text-xs text-gray-500">Currently active</p>
+            </CardContent>
+          </Card>
+
+          {/* Low Stock */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Low Stock
+              </CardTitle>
+              <div className="bg-yellow-100 text-yellow-600 p-3 rounded-lg">
+                <AlertTriangle className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">12</p>
+              <p className="text-xs text-gray-500">
+                Products with stock &lt; 50
+              </p>
+            </CardContent>
+          </Card>
         </div>
-        <Button
-          asChild
-          className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg whitespace-nowrap"
-        >
-          <Link href="/product-wholesale/new">
-            <Plus className="mr-2 h-4 w-4" />
-            Add Wholesale Product
-          </Link>
-        </Button>
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"></h2>
+            <p className="text-muted-foreground mt-1"></p>
+          </div>
+          <Button
+            asChild
+            className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg whitespace-nowrap"
+          >
+            <Link href="/product-wholesale/new">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Wholesale Product
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">

@@ -4,7 +4,17 @@ import type { Row, Table, Column } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal, Plus, Eye, Edit, Trash, Package } from "lucide-react";
+import {
+  MoreHorizontal,
+  Plus,
+  Eye,
+  Edit,
+  Trash,
+  Package,
+  Truck,
+  Clock,
+  CheckCircle,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +25,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DatePicker } from "@/components/ui/date-picker";
 
 type LogisticsOrder = {
   id: string;
@@ -98,12 +110,14 @@ const columns: import("@tanstack/react-table").ColumnDef<
     accessorKey: "partner",
     header: "Partner",
     cell: ({ row }) => (
-      <Badge
-        variant="outline"
-        className="bg-blue-50 text-blue-700 border-blue-200 whitespace-nowrap"
-      >
-        {row.getValue("partner")}
-      </Badge>
+      <Link href={`/logistics-business/${row.original.id}`}>
+        <Badge
+          variant="outline"
+          className="bg-blue-50 text-blue-700 border-blue-200 whitespace-nowrap"
+        >
+          {row.getValue("partner")}
+        </Badge>
+      </Link>
     ),
   },
   {
@@ -209,20 +223,90 @@ export default function LogisticsPage() {
       transition={{ duration: 0.3 }}
       className="space-y-6 p-4 md:p-6"
     >
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"></h2>
-          <p className="text-muted-foreground mt-1"> </p>
+      <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          {/* Total Orders */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Total Orders
+              </CardTitle>
+
+              <div className="bg-indigo-100 text-indigo-600 p-3 rounded-lg">
+                <Package className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">100</p>
+              <p className="text-xs text-gray-500">All logistics requests</p>
+            </CardContent>
+          </Card>
+
+          {/* Delivered Orders */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Delivered
+              </CardTitle>
+
+              <div className="bg-green-100 text-green-600 p-3 rounded-lg">
+                <Truck className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">72</p>
+              <p className="text-xs text-gray-500">Successfully delivered</p>
+            </CardContent>
+          </Card>
+
+          {/* Pending Orders */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Pending
+              </CardTitle>
+              <div className="bg-yellow-100 text-yellow-600 p-3 rounded-lg">
+                <Clock className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">28</p>
+              <p className="text-xs text-gray-500">Awaiting fulfillment</p>
+            </CardContent>
+          </Card>
+
+          {/* Completed Orders */}
+          <Card className="rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Completed
+              </CardTitle>
+              <div className="bg-blue-100 text-blue-600 p-3 rounded-lg">
+                <CheckCircle className="h-5 w-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">72</p>
+              <p className="text-xs text-gray-500">Marked as completed</p>
+            </CardContent>
+          </Card>
         </div>
-        <Button
-          asChild
-          className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg whitespace-nowrap"
-        >
-          <Link href="/logistics-business/new">
-            <Plus className="mr-2 h-4 w-4" />
-            Add Order
-          </Link>
-        </Button>
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"></h2>
+            <p className="text-muted-foreground mt-1"> </p>
+          </div>
+          <Button
+            asChild
+            className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg whitespace-nowrap"
+          >
+            <Link href="/logistics-business/new">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Order
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="bg-white rounded-xl shadow-lg border-0 p-4 md:p-6">
@@ -232,6 +316,13 @@ export default function LogisticsPage() {
           <Badge variant="secondary" className="ml-auto">
             {data.length} total
           </Badge>
+        </div>
+
+        <div className="flex items-center justify-start gap-2 mb-4">
+          <DatePicker
+            dateRange={{ from: null, to: null }}
+            setDateRange={() => {}}
+          />
         </div>
         <DataTable
           columns={columns}

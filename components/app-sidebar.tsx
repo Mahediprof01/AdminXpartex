@@ -9,6 +9,7 @@ import {
   Store,
   ShoppingBag,
   Truck,
+  DollarSign,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -125,6 +126,15 @@ const menuModules = [
           { title: "E-book", url: "/e-book" },
         ],
       },
+    ],
+  },
+  {
+    title: "Accounts",
+    icon: DollarSign, 
+    children: [
+      { title: "Inventory", url: "/inventory" },
+      { title: "Assets", url: "/assets" },
+      { title: "Sheet", url: "/sheet" },
     ],
   },
   {

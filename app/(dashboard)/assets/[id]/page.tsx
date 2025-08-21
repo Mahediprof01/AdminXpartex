@@ -7,22 +7,58 @@ import { ArrowLeft, Edit, Package, DollarSign } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useProductStore } from "@/lib/store";
 import { notFound } from "next/navigation";
-
 import * as React from "react";
-export default function ProductDetailPage({
+
+// Dummy assets dataset
+const dummyAssets = [
+  {
+    id: "ASSET001",
+    name: "Dell Laptop XPS 13",
+    type: "Physical",
+    owner: "Company",
+    quantity: 20,
+    value: 1200,
+    status: "Active",
+    location: "Office HQ",
+    purchaseDate: "2023-02-15",
+    depreciation: 1000,
+  },
+  {
+    id: "ASSET002",
+    name: "Adobe Creative Cloud License",
+    type: "Digital",
+    owner: "Design Team",
+    quantity: 10,
+    value: 600,
+    status: "Active",
+    location: "Cloud",
+    purchaseDate: "2024-01-10",
+    depreciation: 500,
+  },
+  {
+    id: "ASSET003",
+    name: "Delivery Truck",
+    type: "Physical",
+    owner: "Logistics",
+    quantity: 5,
+    value: 50000,
+    status: "Under Maintenance",
+    location: "Warehouse 3",
+    purchaseDate: "2022-11-20",
+    depreciation: 42000,
+  },
+];
+
+export default function AssetDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { getProduct } = useProductStore();
-  const actualParams = React.use(params);
-  const product = getProduct(actualParams.id);
+  const actualParams = React.use(params); // unwrap promise
+  const asset = dummyAssets.find((a) => a.id === actualParams.id);
 
-  if (!product) {
-    notFound();
-  }
+  if (!asset) notFound();
 
   return (
     <motion.div
@@ -31,39 +67,42 @@ export default function ProductDetailPage({
       transition={{ duration: 0.3 }}
       className="space-y-6 p-4 md:p-6"
     >
+      {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
-          <Link href="/product-retail">
+          <Link href="/assets">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
         <div className="flex-1 min-w-0">
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight truncate">
-            {product.name}
+            {asset.name}
           </h1>
-          <p className="text-muted-foreground">Product ID: {product.id}</p>
+          <p className="text-muted-foreground">Asset ID: {asset.id}</p>
         </div>
         <Button asChild className="whitespace-nowrap">
-          <Link href={`/product-retail/update/${product.id}`}>
+          <Link href={`/assets/update/${asset.id}`}>
             <Edit className="mr-2 h-4 w-4" />
-            Edit Product
+            Edit Asset
           </Link>
         </Button>
       </div>
 
+      {/* Two-column layout */}
       <div className="grid gap-6 md:grid-cols-2">
+        {/* Image Card */}
         <Card className="border-0 shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Package className="h-5 w-5 text-green-500" />
-              Product Image
+              Asset Image
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="aspect-square relative bg-muted rounded-lg overflow-hidden">
               <Image
                 src="/placeholder.svg?height=400&width=400"
-                alt={product.name}
+                alt={asset.name}
                 fill
                 className="object-cover"
               />
@@ -71,7 +110,9 @@ export default function ProductDetailPage({
           </CardContent>
         </Card>
 
+        {/* Details */}
         <div className="space-y-6">
+          {/* Basic Info */}
           <Card className="border-0 shadow-lg">
             <CardHeader>
               <CardTitle>Basic Information</CardTitle>
@@ -82,42 +123,42 @@ export default function ProductDetailPage({
                   <p className="text-sm font-medium text-muted-foreground">
                     Name
                   </p>
-                  <p className="text-sm font-semibold">{product.name}</p>
+                  <p className="text-sm font-semibold">{asset.name}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">
-                    Category
+                    Type
                   </p>
                   <Badge
                     variant="outline"
                     className="bg-blue-50 text-blue-700 border-blue-200"
                   >
-                    {product.category}
+                    {asset.type}
                   </Badge>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">
-                    Price
+                    Value
                   </p>
                   <p className="text-lg font-bold text-green-600 flex items-center gap-1">
                     <DollarSign className="h-4 w-4" />
-                    {product.price.toFixed(2)}
+                    {asset.value.toLocaleString()}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">
-                    Stock
+                    Quantity
                   </p>
                   <p
                     className={`text-sm font-semibold ${
-                      product.stock === 0
+                      asset.quantity === 0
                         ? "text-red-500"
-                        : product.stock < 50
+                        : asset.quantity < 5
                         ? "text-orange-500"
                         : "text-green-600"
                     }`}
                   >
-                    {product.stock} units
+                    {asset.quantity} units
                   </p>
                 </div>
                 <div>
@@ -126,63 +167,61 @@ export default function ProductDetailPage({
                   </p>
                   <Badge
                     variant={
-                      product.status === "active" ? "default" : "secondary"
+                      asset.status === "Active" ? "default" : "secondary"
                     }
                     className={
-                      product.status === "active"
+                      asset.status === "Active"
                         ? "bg-green-100 text-green-700"
-                        : ""
+                        : "bg-red-100 text-red-700"
                     }
                   >
-                    {product.status}
+                    {asset.status}
                   </Badge>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">
-                    SKU
+                    Owner
                   </p>
-                  <p className="text-sm font-mono bg-gray-100 px-2 py-1 rounded">
-                    {product.sku}
-                  </p>
+                  <p className="text-sm">{asset.owner}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
+          {/* Detailed Info */}
           <Card className="border-0 shadow-lg">
             <CardHeader>
-              <CardTitle>Product Details</CardTitle>
+              <CardTitle>Asset Details</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
                   Description
                 </p>
-                <p className="text-sm">{product.description}</p>
+                <p className="text-sm">{asset.description}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">
-                    Vendor
+                    Location
                   </p>
-                  <p className="text-sm font-semibold mb-4">{product.vendor}</p>
-
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Manufacturer
-                  </p>
-                  <Link href={`/manufactures/MANU001`}>
-                    <p className="text-sm cursor-pointer underline">
-                      {product.manufacturer}
-                    </p>
-                  </Link>
+                  <p className="text-sm">{asset.location}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">
-                    Created
+                    Purchase Date
                   </p>
                   <p className="text-sm">
-                    {new Date(product.createdAt).toLocaleDateString()}
+                    {new Date(asset.purchaseDate).toLocaleDateString()}
                   </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Depreciation
+                  </p>
+                  <p className="text-sm">${asset.depreciation}</p>
                 </div>
               </div>
             </CardContent>
